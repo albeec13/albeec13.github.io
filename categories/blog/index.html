@@ -13,12 +13,14 @@
       <link href="https://albeec13.github.io/categories/blog/index.xml" rel="alternate" type="application/rss+xml" title="TheWalrus" />
       <link href="https://albeec13.github.io/categories/blog/index.xml" rel="feed" type="application/rss+xml" title="TheWalrus" />
     
+    <link rel="canonical" href="https://albeec13.github.io/categories/blog/"/>
     <link rel="icon" href="https://albeec13.github.io/favicon.ico">
-    <link rel="apple-touch-icon" href="https://albeec13.github.io/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="https://albeec13.github.io/apple-touch-icon.png"/>
     <link rel="stylesheet" href="https://albeec13.github.io/css/style.css">
     <link rel="stylesheet" href="https://albeec13.github.io/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://albeec13.github.io/css/monokai.css">
     <link rel="stylesheet" href="https://albeec13.github.io/fancybox/jquery.fancybox.css">
+    
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
     <meta property="og:title" content="Blog" />
@@ -51,16 +53,22 @@
     
 
     
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
 <div class="container">
 
 
 <div id="container">
-    <header id="header">
+	<header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
-      <a href="https://albeec13.github.io/" id="logo"><i class="logo" style="background-image: url('https://albeec13.github.io/css/images/logo.png')"></i><span class="site-title">TheWalrus</span></a>
+      <a href="https://albeec13.github.io/" id="logo">
+          
+          <span class="site-title">TheWalrus</span>
+      </a>
       <nav id="main-nav">
           
           
@@ -93,10 +101,10 @@
         </nav>
         <div id="search-form-wrap">
           <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
-              <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
+              <input type="search" name="q" class="search-form-input" placeholder="Search">
               <button type="submit" class="search-form-submit">
               </button>
-              <input type="hidden" name="q" value="site:https://albeec13.github.io/">
+              <input type="hidden" name="sitesearch" value="https://albeec13.github.io/" />
          </form>
         </div>
     </div>
@@ -130,8 +138,8 @@
           
           <td>
           <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
-          <input type="search" name="q" results="0" class="search-form-input" placeholder="Search">
-          <input type="hidden" name="q" value="site:https://albeec13.github.io/">
+          <input type="search" name="q" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="sitesearch" value="https://albeec13.github.io/" />
           </form>
         </td>
       </tr>
@@ -140,11 +148,15 @@
   </div>
 </header>
 
-    <div class="outer">
-        <aside id="profile">
+   	
+   	<div class="outer">
+   	
+    	<aside id="profile">
   <div class="inner profile-inner">
     <div class="base-info profile-block">
+      
       <img id="avatar" src="http://www.gravatar.com/avatar/6835a7b2dd56d94017824f35ba56cc21?s=256">
+      
       <h2 id="name">Albert Chaharbakhshi</h2>
       <h3 id="title">Software Engineer</h3>
       <span id="location"><i class="fa fa-map-marker"></i>Chicago</span>
@@ -156,7 +168,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        2
+        1
         <span>Posts</span>
       </div>
       <div class="article-info-block">
@@ -168,11 +180,13 @@
         </span>
       </div>
     </div>
-    <div class="contact-info profile-block">
-      <table class="contact-list">
+    <div class="profile-block social-links">
+      <table>
         <tr>
           
 <td><a href="//github.com/albeec13" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
+
+
 
 
 
@@ -218,7 +232,7 @@
 
 
 
-<td><a href="//stackoverflow.com/users/albeec13" target="_blank" title="Stack Overflow"><i class="fa fa-stackoverflow"></i></a></td>
+<td><a href="//stackoverflow.com/users/albeec13" target="_blank" title="Stack Overflow"><i class="fa fa-stack-overflow"></i></a></td>
 
 
 
@@ -235,22 +249,28 @@
 
 
 
-          <td><a href="https://albeec13.github.io/categories/blog/index.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+          <td><a href="https://albeec13.github.io/index.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
         </tr>
       </table>
     </div>
   </div>
 </aside>
 
-        <section id="main">
-            <section class="archives-wrap">
-                <div class="archive-category-wrap">
-                    <span class="archive-category">Blog</span>
-                </div>
-                <div class="archives">
-                    
-                    
-                        <article class="archive-article archive-type-post">
+    
+
+    <section id="main">
+    
+    
+    
+    
+    <section class="archives-wrap">
+        <div class="archive-category-wrap">
+            <span class="archive-category">Blog</span>
+        </div>
+        <div class="archives">
+            
+            
+                <article class="archive-article archive-type-post">
     <div class="archive-article-inner">
         <div class="archive-article-thumbnail">
             
@@ -271,15 +291,19 @@
     </div>
 </article>
  
-                    
-                </div>
-            </section>
-            <nav id="page-nav">
+            
+        </div>
+    </section>
+    <nav id="page-nav">
 
 </nav>
 
-        </section>
-        <aside id="sidebar">
+    
+
+    </section>
+
+   	
+    	<aside id="sidebar">
     
 <div class="widget-wrap">
     <h3 class="widget-title">
@@ -300,6 +324,7 @@
                     
                     
                     <p class="item-category">
+                        
                         <a class="article-category-link" href="https://albeec13.github.io/categories/blog">
                         blog
                         </a>
@@ -307,23 +332,6 @@
                     
                     
                     <p class="item-title"><a href="https://albeec13.github.io/2016/05/26/hello/" class="title">Hello</a></p>
-                    <p class="item-date">
-                        <time datetime="2016-05-26 12:04:42 -0500 CDT" itemprop="datePublished">2016-05-26</time>
-                    </p>
-                </div>
-            </li>
-            
-            <li>
-                <div class="item-thumbnail">
-                    <a href="https://albeec13.github.io/post/" class="thumbnail">
-                    
-                        <span class="thumbnail-image thumbnail-none"></span>
-                    
-                    </a>
-                </div>
-                <div class="item-inner">
-                    
-                    <p class="item-title"><a href="https://albeec13.github.io/post/" class="title">Posts</a></p>
                     <p class="item-date">
                         <time datetime="2016-05-26 12:04:42 -0500 CDT" itemprop="datePublished">2016-05-26</time>
                     </p>
@@ -344,6 +352,7 @@
         <ul class="category-list">
             
             <li class="category-list-item">
+                
                 <a class="category-list-link" href="https://albeec13.github.io/categories/blog">
                     blog
                 </a>
@@ -353,6 +362,7 @@
         </ul>
     </div>
 </div>
+
 
 
 
@@ -367,6 +377,7 @@
         <ul class="category-list">
             
             <li class="category-list-item">
+                
                 <a class="category-list-link" href="https://albeec13.github.io/tags/hello">
                     hello
                 </a>
@@ -379,6 +390,7 @@
 
 
 
+
     
 
 
@@ -388,6 +400,7 @@
     </h3>
     <div class="widget tagcloud">
         
+        
         <a href="https://albeec13.github.io/tags/hello" style="font-size: 12px;">hello</a>
         
     </div>
@@ -396,10 +409,12 @@
 
 
 
-    <div id="toTop" class="fa fa-chevron-up"></div>
+
+    <div id="toTop" class="fa fa-angle-up"></div>
 </aside>
 
-    </div>
+    
+	</div>
 </div>
 
 <footer id="footer">
@@ -422,20 +437,24 @@ ga('create', 'UA-78353680-1', 'auto');
 ga('send', 'pageview');
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://albeec13.github.io/fancybox/jquery.fancybox.pack.js"></script>
 <script src="https://albeec13.github.io/js/script.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+
 <script>hljs.initHighlightingOnLoad();</script>
 
-<!-- MathJax -->
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   tex2jax: {
     inlineMath: [['$','$'], ['\\(','\\)']]}
   });
 </script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
 
 </body>
 </html>
