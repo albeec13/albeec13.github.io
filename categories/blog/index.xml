@@ -6,27 +6,20 @@
     <description>Recent content in Blog on TheWalrus</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Thu, 26 May 2016 12:04:42 -0500</lastBuildDate>
-    <atom:link href="https://albeec13.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://albeec13.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Hello</title>
-      <link>https://albeec13.github.io/2016/05/26/hello</link>
+      <link>https://albeec13.github.io/2016/05/26/hello/</link>
       <pubDate>Thu, 26 May 2016 12:04:42 -0500</pubDate>
       
-      <guid>https://albeec13.github.io/2016/05/26/hello</guid>
-      <description>
-
-&lt;h1 id=&#34;what-s-with-thewalrus:8a07c3dae13f18d0c06cf5f9e482b173&#34;&gt;What&amp;rsquo;s with TheWalrus?&lt;/h1&gt;
-
-&lt;p&gt;This one&amp;rsquo;s easy. I was looking for interesting words that end with &amp;lsquo;us&amp;rsquo; that could be purchased as cheap domain names. I picked up a few and so far have only maintained &lt;a href=&#34;https://thewalr.us&#34;&gt;TheWalrus&lt;/a&gt; and &lt;a href=&#34;https://thecact.us&#34;&gt;TheCactus&lt;/a&gt;. I have no personal attachment to either one yet, but I&amp;rsquo;m sure I can retroactively drum something up if I can dedicate some time to this blog.&lt;/p&gt;
-
-&lt;h1 id=&#34;what-s-with-this-blog:8a07c3dae13f18d0c06cf5f9e482b173&#34;&gt;What&amp;rsquo;s with this blog?&lt;/h1&gt;
-
-&lt;p&gt;Ever since &amp;ndash; ohh&amp;hellip; &amp;ndash; high school, I&amp;rsquo;ve been meaning to keep an online journal of sorts, before the word &amp;lsquo;Blog&amp;rsquo; was a thing.  I&amp;rsquo;ve made several attempts at doing it, but I&amp;rsquo;ve always wanted to either hand-code, self-host, or otherwise have total control of the whole thing. I have a tendency to start things, work on them until they&amp;rsquo;re &amp;ldquo;good enough,&amp;rdquo; and then never really finish them up. Naturally, this has led to a lot of half-hearted starts at creating my own website which inevitably fall to the wayside once work, family, and real life take center stage.  Finally, I gave in and decided to use &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and &lt;a href=&#34;https://pages.github.com/&#34;&gt;GitHub Pages&lt;/a&gt;.  I&amp;rsquo;m hoping that getting past this intial hurdle will allow me to finally concentrate on the content rather thant he delivery mechanism.&lt;/p&gt;
-
-&lt;p&gt;On that note, my plans for this page are to log projects I&amp;rsquo;m working on (both coding and non-coding related), post general rants and thoughts, and just generaly put pen to paper (or finger to keyboard, as it were) about anyhting and everything that I&amp;rsquo;ve been bottling up inside for decades.  This is, of course, assuming that I can dedicate my focus to something like this, which history would indicate is not looking so optimistic. Nonetheless&amp;hellip;&lt;/p&gt;
-</description>
+      <guid>https://albeec13.github.io/2016/05/26/hello/</guid>
+      <description>What&amp;rsquo;s with TheWalrus? This one&amp;rsquo;s easy. I was looking for interesting words that end with &amp;lsquo;us&amp;rsquo; that could be purchased as cheap domain names. I picked up a few and so far have only maintained TheWalrus and TheCactus. I have no personal attachment to either one yet, but I&amp;rsquo;m sure I can retroactively drum something up if I can dedicate some time to this blog.
+What&amp;rsquo;s with this blog? Ever since &amp;ndash; ohh&amp;hellip; &amp;ndash; high school, I&amp;rsquo;ve been meaning to keep an online journal of sorts, before the word &amp;lsquo;Blog&amp;rsquo; was a thing.</description>
     </item>
     
   </channel>
