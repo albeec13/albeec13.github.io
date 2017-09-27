@@ -18,7 +18,7 @@
       <pubDate>Tue, 26 Sep 2017 00:47:10 -0500</pubDate>
       
       <guid>https://albeec13.github.io/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</guid>
-      <description>Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of the requirements for my plans is that the WiFi on this board be able to run as both a &amp;ldquo;managed&amp;rdquo; device (also known as &amp;ldquo;client&amp;rdquo; mode) and as an access point, preferrably at the same time.</description>
+      <description>Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of myrequirements is that the WiFi on this board be able to run as both a &amp;ldquo;managed&amp;rdquo; device (also known as &amp;ldquo;client&amp;rdquo; mode) and as an access point, preferrably at the same time.</description>
     </item>
     
     <item>

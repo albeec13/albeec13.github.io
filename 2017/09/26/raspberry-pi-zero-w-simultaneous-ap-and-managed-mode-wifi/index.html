@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
     <title>Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi &middot; TheWalrus</title>
-    <meta name="generator" content="Hugo 0.26" />
+    <meta name="generator" content="Hugo 0.27.1" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Albert Chaharbakhshi">
@@ -21,7 +21,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
     <meta property="og:title" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi" />
-<meta property="og:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of the requirements for my plans is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time." />
+<meta property="og:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of myrequirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://albeec13.github.io/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" />
 
@@ -43,18 +43,18 @@
     
     
 <meta itemprop="name" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi">
-<meta itemprop="description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of the requirements for my plans is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time.">
+<meta itemprop="description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of myrequirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time.">
 
 
 <meta itemprop="dateModified" content="2017-09-26T00:47:10-05:00" />
-<meta itemprop="wordCount" content="2284">
+<meta itemprop="wordCount" content="2224">
 
 
 
 <meta itemprop="keywords" content="how-to,raspberry-pi," />
 
     <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi"/>
-<meta name="twitter:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of the requirements for my plans is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time."/>
+<meta name="twitter:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of myrequirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time."/>
 
     
 
@@ -269,6 +269,8 @@
     <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
     <div class="article-inner">
         
+            <img src="https://albeec13.github.io/banners/rpizw.jpg" class="article-banner">
+        
 
         <header class="article-header">
     <a href="https://albeec13.github.io/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/">
@@ -283,7 +285,7 @@
             <i class="fa fa-calendar"></i>
             <time datetime="2017-09-26 00:47:10 -0500 CDT" itemprop="datePublished">2017-09-26</time>
             &middot;
-            2284
+            2224
             words
             &middot;
             11
@@ -329,27 +331,27 @@
 
 <h1 id="enabling-simultaneous-ap-and-managed-mode-wifi-on-raspberry-pi-zero-w-raspbian-stretch">Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch)</h1>
 
-<p>I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of the requirements for my plans is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error of my own, I was finally able to get AP/Manged mode working.</p>
+<p>I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of myrequirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.</p>
 
 <h2 id="prerequisites">Prerequisites</h2>
 
-<p>This tutorial assumes you&rsquo;ve already created a bootable MicroSD card running the latest Raspbian Stretch image and have some way of accessing linux, whether via serial interface, or a monitor and keyboard. If you haven&rsquo;t, a couple of great resources I found online are as follows:</p>
+<p>This tutorial assumes you&rsquo;ve already created a bootable MicroSD card running the latest Raspbian Stretch image and have some way of accessing Linux, whether via serial interface, or a monitor and keyboard. If you haven&rsquo;t, a couple of great resources I found online are:</p>
 
 <ul>
-<li><a href="https://slippytrumpet.io/posts/raspberry-pi-zero-w-setup/">Raspberry Pi Zero W &ldquo;headless&rdquo; Setup</a> - This great tutorial walks you through getting WiFi client mode enabled on your RPi Zero W, without need for a monitor or keyboard to plug into it. You will need a way to modify the contents of the MicroSD card&rsquo;s filesystem, such as a Linux machine, Chromebook with crouton, or VM. There are also ways to do this from Windows, but I&rsquo;ll leave that as an exercise for the reader.</li>
-<li><a href="https://gist.github.com/gbaman/50b6cca61dd1c3f88f41">Raspberry Pi Zero OTG Mode</a> - Another great tutorial, via a GitHub gist, which explains how to enable OTG / USB Gadget mode on the RPi Zero / Zero W. OTG mode lets you both power and communicate with the RPi Zero W as a virtual serial device, ethernet device, or mass storage device, among other things, with nothing more than a standard (read: non-OTG) USB cable. I used this to directly access the Raspbian linux terminal via USB while trying to tweak the WiFi settings, so that I wouldn&rsquo;t lose connectivity I&rsquo;d achieved via the &ldquo;headless&rdquo; setup above. Nonetheless, both options are useful under various circumstances.</li>
+<li><a href="https://slippytrumpet.io/posts/raspberry-pi-zero-w-setup/">Raspberry Pi Zero W &ldquo;headless&rdquo; Setup</a> - This great tutorial walks you through getting WiFi client mode enabled on your RPi Zero W, without need for an attached monitor or keyboard. You will need a way to modify the contents of the MicroSD card&rsquo;s filesystem, such as a Linux machine, Chromebook with crouton, or VM. There are also ways to do this from Windows, but I&rsquo;ll leave that as an exercise for the reader.</li>
+<li><a href="https://gist.github.com/gbaman/50b6cca61dd1c3f88f41">Raspberry Pi Zero OTG Mode</a> - Another awesome tutorial, via GitHub gist, which explains how to enable OTG / USB Gadget mode on the RPi Zero / Zero W. OTG mode lets you both power and communicate with the RPi Zero W as a virtual serial device, ethernet device, or mass storage device, among other things, with nothing more than a standard (read: non-OTG) USB cable. I used this to directly access the Raspbian Linux terminal via USB while trying to tweak the WiFi settings so that I wouldn&rsquo;t drop my ssh session from headless mode.</li>
 </ul>
 
 <h2 id="adding-udev-rule-to-add-a-virtual-ap-device-at-boot-time">Adding Udev Rule To Add A Virtual AP Device At Boot Time</h2>
 
-<p>Before we can operate our access point, we need a device allocated for it, similar to how systemd allocates a <strong>wlan0</strong> device at boot time. As of the time of this writing, only <strong>wlan</strong> is available automatically. We create a file caled <strong>/etc/udev/rules.d/70-persistent-net.rules</strong> which contains the following:</p>
+<p>Before we can operate our access point, we need a device allocated for it, similar to how systemd allocates a <code>wlan0</code> device at boot time. On the build of Raspbian Stretch I&rsquo;m using, only <code>wlan0</code> is available automatically. We create a file caled <code>/etc/udev/rules.d/70-persistent-net.rules</code> which contains the following:</p>
 
 <pre><code class="language-bash">SUBSYSTEM==&quot;ieee80211&quot;, ACTION==&quot;add|change&quot;, ATTR{macaddress}==&quot;b8:27:eb:ff:ff:ff&quot;, KERNEL==&quot;phy0&quot;, \
   RUN+=&quot;/sbin/iw phy phy0 interface add ap0 type __ap&quot;, \
   RUN+=&quot;/bin/ip link set ap0 address b8:27:eb:ff:ff:ff&quot;
 </code></pre>
 
-<p>Note that you must replace both MAC addresses above with that of your own RPi. You can find yours in various ways, such as from your router&rsquo;s client list, or from the RPi&rsquo;s command line via:</p>
+<p>Note that you must replace both MAC addresses above with that of your own RPi. You can find yours in various ways, such as from your router&rsquo;s client list, or from the RPi&rsquo;s command line via <code>iw dev</code>:</p>
 
 <pre><code class="language-bash">pi@raspberrypi:~$ iw dev
 phy#0
@@ -368,17 +370,15 @@ phy#0
                 txpower 31.00 dBm
 </code></pre>
 
-<p>I&rsquo;ve seen some tutorials claim that the address for the virtual AP must be different from the prinmary MAC address. I&rsquo;ve found there to be no difference in behavior, but you should be able to change one byte of the MAC address if you wish without any problems. In my case I left it the same because it works.</p>
+<p>A number of tutorials I found claimed that the address for the virtual AP must be different from the primary MAC address. I found there to be no difference in behavior, but you should be able to change the last byte, for example, to give your client and AP different MACs.</p>
 
-<p>Also, please note that the device we created is called <strong>ap0</strong>. We will refer to this elsewhere, so if you decide to change the name, make sure to use the new name everywhere else I reference it, or things won&rsquo;t work correctly.</p>
-
-<p>Once the file above is created, we can continue on to&hellip;</p>
+<p>The device we created above is called <code>ap0</code>. We will refer to this elsewhere, so if you decide to change the name, make sure to use the new name everywhere else I reference it, or things won&rsquo;t work correctly.</p>
 
 <h2 id="installing-dnsmasq-and-hostapd">Installing Dnsmasq and Hostapd</h2>
 
 <ul>
-<li><strong>Dnsmasq</strong> - This program can do a whole bunch of things, but for our purposes we are using it primarily just as a DHCP server for our WiFi AP.</li>
-<li><strong>Hostapd</strong> - This program defines our AP&rsquo;s configuration, directing the driver on how to operate the AP.</li>
+<li><strong>Dnsmasq</strong> - This program has extensive features, but for our purposes we are using it as a DHCP server for our WiFi AP.</li>
+<li><strong>Hostapd</strong> - This program defines our AP&rsquo;s physical operation based on driver configuration.</li>
 </ul>
 
 <p>Installing these is an easy affair:</p>
@@ -386,9 +386,9 @@ phy#0
 <pre><code class="language-bash">$ sudo apt-get install dnsmasq hostapd
 </code></pre>
 
-<p>Wait awhile, and this process should complete. Don&rsquo;t be alarmed if the install process automatically starts the <strong>dnsmasq.service</strong> in systemd right after installation, and/or fails to load properly. It won&rsquo;t actually work correctly until <strong>ap0</strong> is up.</p>
+<p>Wait awhile, and this process should complete. The install process may automatically start the <code>dnsmasq.service</code> in systemd right after installation and it will probably fail, since <code>ap0</code> does not exist until we reboot. Disregard this for now.</p>
 
-<p>Now, we need to modify 3 files. First we modify <strong>/etc/dnsmasq.conf</strong> by adding the following lines at the end of the file:</p>
+<p>Next, we need to modify 3 files. First we modify <code>/etc/dnsmasq.conf</code> by adding the following lines at the end of the file:</p>
 
 <pre><code class="language-bash">interface=lo,ap0
 no-dhcp-interface=lo,wlan0
@@ -399,9 +399,9 @@ bogus-priv
 dhcp-range=192.168.10.50,192.168.10.150,12h
 </code></pre>
 
-<p>Once again, notice we reference <strong>ap0</strong> above, so use your name here if you changed it above. I&rsquo;ve added Google&rsquo;s DNS server IP here (<em>8.8.8.8</em>) but feel free to substitute your own from your router/ISP/or whatever. I&rsquo;ve also made the assumption that our DHCP server will give out addresses on the <em>192.168.10.0/24</em> subnet, ranging from <em>.50</em> to <em>.150</em>. You can substiute your own subnet here, but be sure to remember it for later, as it must match the static IP we assign your AP. The 12h lease time can also be arbitrarily changed to suit your needs.</p>
+<p>Once again, notice we reference <code>ap0</code> above, so use your device name here if you changed it earlier. I&rsquo;ve added Google&rsquo;s DNS server IP here (<em>8.8.8.8</em>) but feel free to use one from your router/ISP/or whatever. I&rsquo;ve also made the assumption that our DHCP server will give out addresses on the <em>192.168.10.0/24</em> subnet, ranging from <em>.50</em> to <em>.150</em>. You can substiute your own subnet here, but be sure to remember it for later, as it should match the static IP we assign your AP. The 12 hour lease time can also be arbitrarily changed to suit your needs.</p>
 
-<p>Next, we need to modify the file at <strong>/etc/hostapd/hostapd.conf</strong>. I found many different parameters online that can go in here, but this is what worked for me. Feel free to experiment further by poking around online. In any event, lets do this for now:</p>
+<p>Next, we need to modify the file at <code>/etc/hostapd/hostapd.conf</code>. I found many different parameters that can go in here, but this is what worked for me. Feel free to experiment further by poking around online. Lets do this for now:</p>
 
 <pre><code class="language-bash">ctrl_interface=/var/run/hostapd
 ctrl_interface_group=0
@@ -420,22 +420,23 @@ wpa_pairwise=TKIP CCMP
 rsn_pairwise=CCMP
 </code></pre>
 
-<p>A couple things to note here:
-  1. Replace <em>YourApNameHere</em> and <em>YourPassPhraseHere</em> with the SSID and Passphrase you wish to use.
-  2. I read all over the place that the channel you use here <em>must</em> match the channel that your <strong>wlan0</strong> iterface is using for its WiFi connection, as reported by <em>iw dev</em>. In my testing, it looks like the RPi&rsquo;s AP will dynamically change channels to match whatever channel the <strong>wlan0</strong> interface is currently using. I watched this happen in real time by rebooting the WiFi AP the RPi was using, forcing it to roam and switch to another AP in my house. In the process, <strong>wlan0</strong> switched from channel 11 to channel 6, and <strong>ap0</strong> did the same, without losing connectivity. Your mileage may vary, but as far as I can tell, the channel above is not important for this to work, despite what I read elsewhere. In practice, it appears to change dynamically, and will only set the initial channel it operates on.</p>
+<p>A couple things to note here:</p>
 
-<p>Finally, we modify <strong>/etc/default/hostapd</strong> like so:</p>
+<ol>
+<li>Replace <code>YourApNameHere</code> and <code>YourPassPhraseHere</code> with the SSID and Passphrase you wish to use.</li>
+<li>I read multiple sources claiming that the channel you use here <em>must</em> match the channel that your <code>wlan0</code> iterface is using for its WiFi connection, as reported by <code>iw dev</code>. In my testing, it looks like the RPi&rsquo;s AP will dynamically change channels to match whatever channel the <code>wlan0</code> interface is currently using. I watched this happen in real time by rebooting the WiFi AP the RPi was using, forcing it to roam and switch to another AP in my house. In the process, <code>wlan0</code> switched from channel 11 to channel 6, and <code>ap0</code> did the same, without losing connectivity.</li>
+</ol>
+
+<p>Finally, we modify <code>/etc/default/hostapd</code> like so:</p>
 
 <pre><code class="language-bash">DAEMON_CONF=&quot;/etc/hostapd/hostapd.conf&quot;
 </code></pre>
 
-<p>This tells the hostpad daemon to use our new conf file. (To be honest, I&rsquo;m not sure if this matters or not when launching hostapd manually and pointing to the proper config file, but better to be safe&hellip;)</p>
-
-<p>With that out of the way, we can continue to&hellip;</p>
+<p>This tells the <code>hostpad</code> daemon to use our new conf file. (To be honest, I&rsquo;m not sure if this matters since we will be launching hostapd manually and pointing to the proper config file, but it shouldn&rsquo;t hurt anything.)</p>
 
 <h2 id="modify-our-interfaces-file">Modify Our Interfaces File</h2>
 
-<p>Next, we need to define our WiFi network interfaces, both for our managed access (<strong>wlan0</strong>) and for our access point (<strong>ap0</strong>). We will also use wpa_supplicant to assist with connecting to WPA-encrypted WiFi networks. If you followed the &ldquo;headless&rdquo; bring-up tutorial I mentioned in the prereqs, you will have already touched both of the following files and configured <strong>wlan0</strong> as required. In that case, we&rsquo;ll be adding a static IP definition for <strong>ap0</strong>. First, we modify <strong>/etc/wpa_supplicant/wpa_supplicant.conf</strong> as so:</p>
+<p>Next, we need to define our WiFi network interfaces, both for our managed access (<code>wlan0</code>) and for our access point (<code>ap0</code>). We will also use <code>wpa_supplicant</code> to assist with connecting to WPA-encrypted WiFi networks. If you followed the &ldquo;headless&rdquo; bring-up tutorial I mentioned in the prereqs, you will have already touched both of the following files and configured <code>wlan0</code> as required. In that case, we&rsquo;ll be adding a static IP definition for <code>ap0</code>. First, we modify <code>/etc/wpa_supplicant/wpa_supplicant.conf</code> as so:</p>
 
 <pre><code class="language-bash">country=US
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -454,9 +455,9 @@ network={
 }
 </code></pre>
 
-<p>Obviously, you would replace the SSIDs and Passphrases above with your own. Also, you clearly aren&rsquo;t required to name multiple SSIDs here, and can omit one if you only have one 2.4 GHz SSID available. The <em>id_str</em> can be used as a quick reference name in our interfaces file, as you&rsquo;ll see below. You should also change the country code to whatever is appropriate for your region.</p>
+<p>Again, you should replace the SSIDs and Passphrases above with your own. You aren&rsquo;t required to name multiple SSIDs here, but if you add more, the RPi can roam between networks if configured correctly, as we will do below. The <code>id_str</code> field  can be used as a quick reference name in our interfaces file. You should also change the country code to whatever is appropriate for your region.</p>
 
-<p>Next, we modify <strong>/etc/network/interfaces</strong> to support our new AP:</p>
+<p>Next, we modify <code>/etc/network/interfaces</code> to support our new AP:</p>
 
 <pre><code class="language-bash"># interfaces(5) file used by ifup(8) and ifdown(8)
 
@@ -484,13 +485,13 @@ iface AP1 inet dhcp
 iface AP2 inet dhcp
 </code></pre>
 
-<p>As you can see, we want both <strong>ap0</strong> and <strong>wlan0</strong> to start up automatically, with <strong>ap0</strong> defined to have a static IP of <em>192.168.10.1</em> on the <em>192.168.10.0/24</em> subnet. Recall, the DHCP address range we defined in <strong>/etc/dnsmasq.conf</strong> matched this subnet. Adjust accordingly if you made changes. We also reference our hostapd config file here, to direct the AP configuration for <strong>ap0</strong>.</p>
+<p>As you can see, we want both <code>ap0</code> and <code>wlan0</code> to start up automatically, with <code>ap0</code> defined to have a static IP of <em>192.168.10.1</em> on the <em>192.168.10.0/24</em> subnet. Recall, the DHCP address range we defined in <code>/etc/dnsmasq.conf</code> matched this subnet. Adjust accordingly if you made changes. We also reference our <code>hostapd</code> config file here, to direct the AP configuration for <code>ap0</code>.</p>
 
-<p>For <strong>wlan0</strong>, we start it using manual mode and point it to our <strong>/etc/wpa_supplicant/wpa_supplicant.conf</strong> file for our WiFi network definitions. The wpa-roam designator will allow the interface to move freely between our defined networks. Finally, the last two lines use our friendly names from <strong>wpa_supplicant.conf</strong> to refer to our available networks, and indicate this interface should use DHCP supplied by those APs to assign an address to <strong>wlan0</strong>.  <strong>Please note the order here. Ap0 must come up before wlan0, or they won&rsquo;t both run at the same time.</strong></p>
+<p>For <code>wlan0</code>, we start it using manual mode and point it to our <code>/etc/wpa_supplicant/wpa_supplicant.conf</code> file for our WiFi network definitions. The <code>wpa-roam</code> designator will allow the interface to move freely between our defined networks. Finally, the last two lines use our friendly names from <code>wpa_supplicant.conf</code> to refer to our available networks, and indicate this interface should use DHCP supplied by those APs to assign an address to <code>wlan0</code>.  <strong>Please note the order here: ap0 must come up before wlan0, or they won&rsquo;t both work at the same time.</strong></p>
 
 <h2 id="we-re-done-or-are-we">We&rsquo;re Done! Or Are We&hellip;</h2>
 
-<p>At this point, I expect everything to work after a reboot. Instead, I end up with <strong>wlan0</strong> UP and <strong>ap0</strong> DOWN or vice-versa. DMESG also indicates some errors in the broadcom driver. After some tinkering, I discovered the following sequence of commands after a reboot would get both interfaces up and working simultaneously, like we wanted all along:</p>
+<p>At this point, I expect everything to work after a reboot. Instead, I end up with <code>wlan0</code> UP and <code>ap0</code> DOWN (or vice-versa) when checking via <code>ip addr</code>, and <code>dmesg</code> indicates some errors in the Broadcom driver. After some tinkering, I discovered the following sequence of commands after a reboot would get both interfaces up and working simultaneously, like we wanted all along:</p>
 
 <pre><code class="language-bash">$ sudo ifdown --force wlan0
 $ sudo ifdown --force ap0
@@ -498,31 +499,27 @@ $ sudo ifup ap0
 $ sudo ifup wlan0
 </code></pre>
 
-<p>I had to add <em>&ndash;force</em> because sometimes hostapd would complain about having a lock on <strong>wlan0</strong> and fail to proceed, so it ensures we get what we want. After bringing down both interfaces, again, with <strong>ap0</strong> going first, followed by <strong>wlan0</strong>, they should both come up:</p>
+<p>I had to add <code>--force</code> because sometimes hostapd would complain about having a lock on <code>wlan0</code> and fail to proceed, so it ensures we get what we want. After bringing down both interfaces, again, with <code>ap0</code> going first, followed by <code>wlan0</code>, they should both come up:</p>
 
-<pre><code class="language-bash">pi@raspberrypi:~$ iw dev
-phy#0
-        Unnamed/non-netdev interface
-                wdev 0x4
-                addr ba:27:eb:ff:ff:ff
-                type P2P-device
-                txpower 31.00 dBm
-        Interface ap0
-                ifindex 3
-                wdev 0x2
-                addr b8:27:eb:ff:ff:ff
-                ssid &lt;YOUR RPI SSID&gt;
-                type AP
-                channel 6 (2437 MHz), width: 20 MHz, center1: 2437 MHz
-                txpower 31.00 dBm
-        Interface wlan0
-                ifindex 2
-                wdev 0x1
-                addr b8:27:eb:ff:ff:ff
-                ssid &lt;YOUR HOME SSID&gt;
-                type managed
-                channel 6 (2437 MHz), width: 20 MHz, center1: 2437 MHz
-                txpower 31.00 dBm
+<pre><code class="language-bash">pi@raspberrypi:~$ ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether b8:27:eb:ff:ff:ff brd ff:ff:ff:ff:ff:ff
+    inet 192.168.43.37/24 brd 192.168.43.255 scope global wlan0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ba27:ebff:fede:3a79/64 scope link
+       valid_lft forever preferred_lft forever
+3: ap0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether b8:27:eb:ff:ff:ff brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.1/24 brd 192.168.10.255 scope global ap0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ba27:ebff:fede:3a79/64 scope link
+       valid_lft forever preferred_lft forever
 </code></pre>
 
 <p>Great! But what about bridging traffic between my AP and client sides to allow a device to access the internet through my RPi? Let&rsquo;s do that:</p>
@@ -532,13 +529,13 @@ $ sudo iptables -t nat -A POSTROUTING -s 192.168.10.0/24 ! -d 192.168.10.0/24 -j
 $ sudo systemctl restart dnsmasq
 </code></pre>
 
-<p>Here, we enable ip forwarding to allow packets to be forwarded between interfaces, and we add a postrouting rule to IP tables which routes all packets from the AP-side interface to the client-side interface (where MASQUERADE is necessary, since the IP is dynamic and undefined until <strong>wlan0</strong> connects to an AP). Finally, we restart dnsmasq for good measure, since we previously brought down <strong>ap0</strong> with <em>ifdown</em>.</p>
+<p>Here, we enable ip forwarding to allow packets to be forwarded between interfaces, and we add a postrouting rule to IP tables which routes all packets from the AP-side interface to the client-side interface (where MASQUERADE is necessary, since the IP is dynamic and undefined until <code>wlan0</code> connects to an AP). Finally, we restart dnsmasq for good measure, since we previously brought down <code>ap0</code> with <code>ifdown</code>.</p>
 
-<p>At this point, we should be able to connect a device to our Raspberry Pi Zero W&rsquo;s AP SSID, while we also have our RPi connect to another access point for internet access, <strong>AND</strong> we should be able to access the internet from that device through our RPi. Only one thing left to do&hellip;</p>
+<p>At this point, we should be able to connect a device to our Raspberry Pi Zero W&rsquo;s AP SSID, while we also have our RPi connect to another access point for internet access, <em>and</em> we should be able to access the internet from that device through our RPi. Only one thing left to do&hellip;</p>
 
 <h2 id="automate-the-workaround">Automate The Workaround</h2>
 
-<p>Try as I might to debug the issues I was having before manaully reseting the interfaces, I was unable to get the RPi to simply boot up working correctly. So, I decided to script the steps to &ldquo;fix&rdquo; everything and set them to run as a root cron job with a 30s delay&hellip; (Yes, I know this is horrible practice, but I&rsquo;m open to better suggestions.)  I intially tried setting up a systemd service to call my script instead of cron with a delay, but it didn&rsquo;t seem to work or ran at the wrong time, requiring manual intervention.</p>
+<p>Try as I might to debug the issues I was having before manaully reseting the interfaces, I was unable to get the RPi to simply boot up working correctly. So, I decided to script the steps to &ldquo;fix&rdquo; everything and set them to run as a root <code>cron</code> job with a 30s delay&hellip; (Yes, I know this is horrible practice, but I&rsquo;m open to better suggestions.)  I intially tried setting up a <code>systemd</code> service to call my script instead of <code>cron</code> with a delay, but it didn&rsquo;t seem to work or ran at the wrong time, requiring manual intervention.</p>
 
 <p>Here&rsquo;s the script in it&rsquo;s entirety:</p>
 
@@ -551,8 +548,8 @@ sudo iptables -t nat -A POSTROUTING -s 192.168.10.0/24 ! -d 192.168.10.0/24 -j M
 sudo systemctl restart dnsmasq
 </code></pre>
 
-<p>I simply left the file in my default &ldquo;pi&rdquo; user&rsquo;s home directory, but you can move it someplace more appropriate, such as <strong>/sbin</strong>.
-I then added a cron job like so:</p>
+<p>I simply left the file in my default &ldquo;pi&rdquo; user&rsquo;s home directory, but you can move it someplace more appropriate, such as <code>/sbin</code>.
+I then added a <code>cron</code> job like so:</p>
 
 <pre><code class="language-bash">$ sudo crontab -e
 </code></pre>
@@ -562,13 +559,13 @@ I then added a cron job like so:</p>
 <pre><code class="language-bash">@reboot /home/pi/start-ap-managed-wifi.sh
 </code></pre>
 
-<p>This causes the script to run at every reboot. In testing, I foud the RPi Zero W boots in under 20s. Systemd runs cron somewhere in that range of time, which eventually runs the script above. To be safe, you can change the 30s delay to something longer, but I found this to be pretty reliable.</p>
+<p>This causes the script to run at every reboot. In testing, I foud the RPi Zero W boots in under 20s. <code>Systemd</code> runs the <code>cron</code> service  somewhere in that range of time, which eventually runs the script above. To be safe, you can change the 30s delay to something longer, but I found this to be pretty reliable.</p>
 
-<p>Now, after every reboot, even though <strong>ap0</strong> and <strong>wlan0</strong> don&rsquo;t initally play well together, the cron job kicks off my script after 30s and magically fixes everything. We have AP and Managed mode running at the same time, and we&rsquo;re bridging traffic between the interfaces to allow for internet sharing.</p>
+<p>Now, after every reboot, even though <code>ap0</code> and <code>wlan0</code> don&rsquo;t initally play well together, the <code>cron</code> job kicks off my script after 30s and magically fixes everything. We have AP and Managed mode running at the same time, and we&rsquo;re bridging traffic between the interfaces to allow for internet sharing through the Raspberry Pi Zero W.</p>
 
 <h2 id="special-thanks">Special Thanks</h2>
 
-<p>The following links were pretty instrumental in getting things going for me, so I wanted to thank those authors by providing links back to their pages:</p>
+<p>The following links were pretty instrumental in getting things moving in the right direction, so please check them out:</p>
 
 <ul>
 <li><a href="https://raspberrypi.stackexchange.com/questions/63841/rpi-zero-w-as-both-wifi-client-and-access-point">https://raspberrypi.stackexchange.com/questions/63841/rpi-zero-w-as-both-wifi-client-and-access-point</a></li>
@@ -696,8 +693,8 @@ I then added a cron job like so:</p>
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
     </div>
 </section>
 
@@ -718,7 +715,7 @@ I then added a cron job like so:</p>
                 <div class="item-thumbnail">
                     <a href="https://albeec13.github.io/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" class="thumbnail">
                     
-                        <span class="thumbnail-image thumbnail-none"></span>
+                        <span style="background-image:url(https://albeec13.github.io/banners/rpizw.jpg)" alt="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi" class="thumbnail-image"></span>
                     
                     </a>
                 </div>
