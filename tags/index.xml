@@ -2,40 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on TheWalrus</title>
-    <link>https://albeec13.github.io/tags/</link>
+    <link>https://blog.thewalr.us/tags/</link>
     <description>Recent content in Tags on TheWalrus</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Thu, 26 May 2016 12:04:42 -0500</lastBuildDate>
     
-	<atom:link href="https://albeec13.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.thewalr.us/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hello</title>
-      <link>https://albeec13.github.io/tags/hello/</link>
+      <link>https://blog.thewalr.us/tags/hello/</link>
       <pubDate>Thu, 26 May 2016 12:04:42 -0500</pubDate>
       
-      <guid>https://albeec13.github.io/tags/hello/</guid>
+      <guid>https://blog.thewalr.us/tags/hello/</guid>
       <description></description>
     </item>
     
     <item>
       <title>How To</title>
-      <link>https://albeec13.github.io/tags/how-to/</link>
+      <link>https://blog.thewalr.us/tags/how-to/</link>
       <pubDate>Tue, 26 Sep 2017 00:47:10 -0500</pubDate>
       
-      <guid>https://albeec13.github.io/tags/how-to/</guid>
+      <guid>https://blog.thewalr.us/tags/how-to/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Raspberry Pi</title>
-      <link>https://albeec13.github.io/tags/raspberry-pi/</link>
+      <link>https://blog.thewalr.us/tags/raspberry-pi/</link>
       <pubDate>Tue, 26 Sep 2017 00:47:10 -0500</pubDate>
       
-      <guid>https://albeec13.github.io/tags/raspberry-pi/</guid>
+      <guid>https://blog.thewalr.us/tags/raspberry-pi/</guid>
       <description></description>
     </item>
     
