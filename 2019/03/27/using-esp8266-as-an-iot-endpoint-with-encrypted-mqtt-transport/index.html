@@ -57,7 +57,7 @@
 
 
 <div id="container">
-	<header id="header">
+    <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
       <a href="https://blog.thewalr.us/" id="logo">
@@ -145,10 +145,10 @@
   </div>
 </header>
 
-   	
-   	<div class="outer">
-   	
-    	<aside id="profile">
+
+    <div class="outer">
+    
+        <aside id="profile">
   <div class="inner profile-inner">
     <div class="base-info profile-block">
       
@@ -205,6 +205,8 @@
 
 
 
+<td><a href="//instagram.com/albeec13" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></td>
+
 
 
 <td><a href="//youtube.com/albeec13" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></td>
@@ -237,8 +239,6 @@
 
 
 
-<td><a href="//plus.google.com/+AlbertChaharbakhshi" target="_blank" title="Google+"><i class="fa fa-google-plus"></i></a></td>
-
 
 
 <td><a href="//facebook.com/albeec13" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></td>
@@ -256,7 +256,7 @@
     
 
     
-    <section id="main">
+        <section id="main">
     
 
     
@@ -333,6 +333,40 @@
 </header>
 
         <div class="article-entry" itemprop="articleBody">
+            
+                <h2>Table Of Contents</h2>
+                <nav id="TableOfContents">
+<ul>
+<li><a href="#using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport">Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport</a>
+<ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#generating-a-ca-cert-and-self-signing-an-mqtt-server-cert">Generating a CA Cert and Self-signing an MQTT Server Cert</a>
+<ul>
+<li><a href="#generate-a-ca-private-key">Generate a CA Private Key</a></li>
+<li><a href="#generating-a-self-signed-ca-cert">Generating a Self-Signed CA Cert</a></li>
+<li><a href="#generating-an-mqtt-broker-private-key">Generating an MQTT Broker Private Key</a></li>
+<li><a href="#generating-a-mqtt-broker-certificate-signing-request-csr">Generating a MQTT Broker Certificate Signing Request (CSR)</a></li>
+<li><a href="#generating-a-ca-signed-mqtt-broker-cert">Generating a CA-signed MQTT Broker Cert</a></li>
+<li><a href="#extracting-our-mqtt-broker-cert-fingerprint">Extracting our MQTT Broker Cert Fingerprint</a></li>
+<li><a href="#cert-housekeeping">Cert Housekeeping</a></li>
+</ul></li>
+<li><a href="#configuring-mosquitto-to-use-encrypted-transport">Configuring Mosquitto to use Encrypted Transport</a>
+<ul>
+<li><a href="#testing-our-mqtt-broker">Testing our MQTT Broker</a></li>
+</ul></li>
+<li><a href="#running-esp8266-as-an-mqtt-enabled-iot-endpoint">Running ESP8266 as an MQTT-enabled IoT Endpoint</a>
+<ul>
+<li><a href="#getting-esp8266-connected-to-a-wifi-ap">Getting ESP8266 Connected to a WiFi AP</a></li>
+<li><a href="#adding-wificlientsecure-for-tls-transport-security">Adding WiFiClientSecure for TLS Transport Security</a></li>
+<li><a href="#adding-arduino-client-for-mqtt-support">Adding Arduino Client for MQTT Support</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#full-arduino-source-code">Full Arduino Source Code</a></li>
+<li><a href="#special-thanks">Special Thanks</a></li>
+</ul></li>
+</ul>
+</nav>
+            
             
 
 <h1 id="using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport">Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport</h1>
@@ -891,7 +925,7 @@ Attempting MQTT broker connection...connected
 {&quot;set&quot;:&quot;on&quot;}
 </code></pre>
 
-<h2 id="conclusion">Conclusion:</h2>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>And that&rsquo;s a wrap! We&rsquo;ve now gone through all the steps to:</p>
 
@@ -1240,10 +1274,11 @@ void subCallback(char *topic, byte *payload, unsigned int length)
 </section>
 
 
-    </section>
 
-   	
-    	<aside id="sidebar">
+        </section>
+
+    
+        <aside id="sidebar">
     
 <div class="widget-wrap">
     <h3 class="widget-title">
@@ -1480,7 +1515,7 @@ void subCallback(char *topic, byte *payload, unsigned int length)
 </aside>
 
     
-	</div>
+    </div>
 </div>
 
 <footer id="footer">
@@ -1527,3 +1562,4 @@ MathJax.Hub.Config({
 
 </body>
 </html>
+
