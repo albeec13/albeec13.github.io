@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
     <title>TheWalrus</title>
-    <meta name="generator" content="Hugo 0.40.3" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Albert Chaharbakhshi">
@@ -28,18 +28,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://blog.thewalr.us/" />
 
-
-
-<meta property="og:updated_time" content="2017-09-26T00:47:10-05:00"/>
-
-
-
-
-
-
-
-
-
+<meta property="og:updated_time" content="2019-03-27T18:45:46-05:00"/>
 
     
     
@@ -171,12 +160,12 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        2
+        3
         <span>Posts</span>
       </div>
       <div class="article-info-block">
         
-          3
+          7
         
         <span>
             Tags
@@ -267,6 +256,170 @@
 
     
     
+
+<article class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" itemprop="url">
+            <img src="https://blog.thewalr.us/banners/esp8266.jpg" class="article-banner">
+        
+        </a>
+
+        <header class="article-header">
+    <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/">
+    <h1 class="article-title" itemprop="name">
+        Using Esp8266 as an Iot Endpoint With Encrypted Mqtt Transport
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2019-03-27 18:45:46 -0500 CDT" itemprop="datePublished">2019-03-27</time>
+            &middot;
+            4897
+            words
+            &middot;
+            23
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://blog.thewalr.us/categories/how-to">how-to</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://blog.thewalr.us/tags/how-to">how-to</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://blog.thewalr.us/tags/arduino">arduino</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://blog.thewalr.us/tags/esp8266">ESP8266</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://blog.thewalr.us/tags/mqtt">MQTT</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://blog.thewalr.us/tags/certs">certs</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <p>
+                Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.
+            </p>
+            <p class="article-more-link">
+                <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/">
+                    Read more
+                </a>
+            </p>
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" data-id="9f5d6f51201d450842bf953f35f9f094" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+</article>
 
 <article class="article article-type-post" itemscope="" itemprop="blogPost">
     <div class="article-inner">
@@ -586,6 +739,32 @@ What&rsquo;s with this blog? Ever since &ndash; ohh&hellip; &ndash; high school,
             
             <li>
                 <div class="item-thumbnail">
+                    <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" class="thumbnail">
+                    
+                        <span style="background-image:url(https://blog.thewalr.us/banners/esp8266.jpg)" alt="TheWalrus" class="thumbnail-image"></span>
+                    
+                    </a>
+                </div>
+                <div class="item-inner">
+                    
+                    
+                    <p class="item-category">
+                        
+                        <a class="article-category-link" href="https://blog.thewalr.us/categories/how-to">
+                        how-to
+                        </a>
+                    </p>
+                    
+                    
+                    <p class="item-title"><a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" class="title">Using Esp8266 as an Iot Endpoint With Encrypted Mqtt Transport</a></p>
+                    <p class="item-date">
+                        <time datetime="2019-03-27 18:45:46 -0500 CDT" itemprop="datePublished">2019-03-27</time>
+                    </p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="item-thumbnail">
                     <a href="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" class="thumbnail">
                     
                         <span style="background-image:url(https://blog.thewalr.us/banners/rpizw.jpg)" alt="TheWalrus" class="thumbnail-image"></span>
@@ -662,7 +841,7 @@ What&rsquo;s with this blog? Ever since &ndash; ohh&hellip; &ndash; high school,
                 <a class="category-list-link" href="https://blog.thewalr.us/categories/how-to">
                     how-to
                 </a>
-                <span class="category-list-count">1</span>
+                <span class="category-list-count">2</span>
             </li>
             
         </ul>
@@ -684,6 +863,30 @@ What&rsquo;s with this blog? Ever since &ndash; ohh&hellip; &ndash; high school,
             
             <li class="category-list-item">
                 
+                <a class="category-list-link" href="https://blog.thewalr.us/tags/arduino">
+                    arduino
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://blog.thewalr.us/tags/certs">
+                    certs
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://blog.thewalr.us/tags/esp8266">
+                    esp8266
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
                 <a class="category-list-link" href="https://blog.thewalr.us/tags/hello">
                     hello
                 </a>
@@ -694,6 +897,14 @@ What&rsquo;s with this blog? Ever since &ndash; ohh&hellip; &ndash; high school,
                 
                 <a class="category-list-link" href="https://blog.thewalr.us/tags/how-to">
                     how-to
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://blog.thewalr.us/tags/mqtt">
+                    mqtt
                 </a>
                 <span class="category-list-count">1</span>
             </li>
@@ -723,10 +934,22 @@ What&rsquo;s with this blog? Ever since &ndash; ohh&hellip; &ndash; high school,
     <div class="widget tagcloud">
         
         
+        <a href="https://blog.thewalr.us/tags/arduino" style="font-size: 12px;">arduino</a>
+        
+        
+        <a href="https://blog.thewalr.us/tags/certs" style="font-size: 12px;">certs</a>
+        
+        
+        <a href="https://blog.thewalr.us/tags/esp8266" style="font-size: 12px;">esp8266</a>
+        
+        
         <a href="https://blog.thewalr.us/tags/hello" style="font-size: 12px;">hello</a>
         
         
         <a href="https://blog.thewalr.us/tags/how-to" style="font-size: 12px;">how-to</a>
+        
+        
+        <a href="https://blog.thewalr.us/tags/mqtt" style="font-size: 12px;">mqtt</a>
         
         
         <a href="https://blog.thewalr.us/tags/raspberry-pi" style="font-size: 12px;">raspberry-pi</a>
@@ -748,21 +971,24 @@ What&rsquo;s with this blog? Ever since &ndash; ohh&hellip; &ndash; high school,
 <footer id="footer">
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018
+      &copy; 2019
       Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
     </div>
   </div>
 </footer>
 
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-78353680-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-78353680-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
 <script src="https://blog.thewalr.us/fancybox/jquery.fancybox.pack.js"></script>
