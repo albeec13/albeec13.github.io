@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hello on TheWalrus</title>
+    <title>hello on TheWalrus</title>
     <link>https://blog.thewalr.us/tags/hello/</link>
-    <description>Recent content in Hello on TheWalrus</description>
+    <description>Recent content in hello on TheWalrus</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 May 2016 12:04:42 -0500</lastBuildDate>
-    
-	<atom:link href="https://blog.thewalr.us/tags/hello/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 26 May 2016 12:04:42 -0500</lastBuildDate><atom:link href="https://blog.thewalr.us/tags/hello/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hello</title>
       <link>https://blog.thewalr.us/2016/05/26/hello/</link>

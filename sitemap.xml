@@ -1,98 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</loc>
-    <lastmod>2017-09-26T00:47:10-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.thewalr.us/2016/05/26/hello/</loc>
-    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
-  </url>
-  
   <url>
     <loc>https://blog.thewalr.us/tags/arduino/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.thewalr.us/categories/blog/</loc>
-    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/categories/</loc>
-    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
+  </url><url>
     <loc>https://blog.thewalr.us/tags/certs/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/tags/esp8266/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.thewalr.us/tags/hello/</loc>
-    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/tags/how-to/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/categories/how-to/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/tags/mqtt/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/post/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.thewalr.us/tags/raspberry-pi/</loc>
-    <lastmod>2017-09-26T00:47:10-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/tags/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://blog.thewalr.us/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-    <priority>0</priority>
+  </url><url>
+    <loc>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</loc>
+    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</loc>
+    <lastmod>2017-09-26T00:47:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/raspberry-pi/</loc>
+    <lastmod>2017-09-26T00:47:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/categories/blog/</loc>
+    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/hello/</loc>
+    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/2016/05/26/hello/</loc>
+    <lastmod>2016-05-26T12:04:42-05:00</lastmod>
   </url>
-  
 </urlset>

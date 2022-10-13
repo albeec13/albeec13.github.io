@@ -2,13 +2,16 @@
 <html lang="en-us">
 <head>
     <title>Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport &middot; TheWalrus</title>
-    <meta name="generator" content="Hugo 0.54.0" />
+    <meta name="generator" content="Hugo 0.104.2" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Albert Chaharbakhshi">
     
       <meta name="description" content="">
     
+    
+      <link href="/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" rel="alternate" type="application/rss+xml" title="TheWalrus" />
+      <link href="/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" rel="feed" type="application/rss+xml" title="TheWalrus" />
     
     <link rel="canonical" href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/"/>
     <link rel="icon" href="https://blog.thewalr.us/favicon.ico">
@@ -23,24 +26,17 @@
     <meta property="og:title" content="Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport" />
 <meta property="og:description" content="Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" />
-<meta property="article:published_time" content="2019-03-27T18:45:46-05:00"/>
-<meta property="article:modified_time" content="2019-03-27T18:45:46-05:00"/>
+<meta property="og:url" content="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-03-27T18:45:46-05:00" />
+<meta property="article:modified_time" content="2019-03-27T18:45:46-05:00" />
+
 
     
-    
-<meta itemprop="name" content="Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport">
-<meta itemprop="description" content="Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.">
-
-
-<meta itemprop="datePublished" content="2019-03-27T18:45:46-05:00" />
+    <meta itemprop="name" content="Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport">
+<meta itemprop="description" content="Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house."><meta itemprop="datePublished" content="2019-03-27T18:45:46-05:00" />
 <meta itemprop="dateModified" content="2019-03-27T18:45:46-05:00" />
-<meta itemprop="wordCount" content="4897">
-
-
-
+<meta itemprop="wordCount" content="5331">
 <meta itemprop="keywords" content="how-to,arduino,ESP8266,MQTT,certs," />
-
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport"/>
 <meta name="twitter:description" content="Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house."/>
@@ -279,10 +275,10 @@
             <i class="fa fa-calendar"></i>
             <time datetime="2019-03-27 18:45:46 -0500 CDT" itemprop="datePublished">2019-03-27</time>
             &middot;
-            4897
+            5331
             words
             &middot;
-            23
+            26
             minute read
         </div>
         
@@ -336,57 +332,47 @@
             
                 <h2>Table Of Contents</h2>
                 <nav id="TableOfContents">
-<ul>
-<li><a href="#using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport">Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport</a>
-<ul>
-<li><a href="#prerequisites">Prerequisites</a></li>
-<li><a href="#generating-a-ca-cert-and-self-signing-an-mqtt-server-cert">Generating a CA Cert and Self-signing an MQTT Server Cert</a>
-<ul>
-<li><a href="#generate-a-ca-private-key">Generate a CA Private Key</a></li>
-<li><a href="#generating-a-self-signed-ca-cert">Generating a Self-Signed CA Cert</a></li>
-<li><a href="#generating-an-mqtt-broker-private-key">Generating an MQTT Broker Private Key</a></li>
-<li><a href="#generating-a-mqtt-broker-certificate-signing-request-csr">Generating a MQTT Broker Certificate Signing Request (CSR)</a></li>
-<li><a href="#generating-a-ca-signed-mqtt-broker-cert">Generating a CA-signed MQTT Broker Cert</a></li>
-<li><a href="#extracting-our-mqtt-broker-cert-fingerprint">Extracting our MQTT Broker Cert Fingerprint</a></li>
-<li><a href="#cert-housekeeping">Cert Housekeeping</a></li>
-</ul></li>
-<li><a href="#configuring-mosquitto-to-use-encrypted-transport">Configuring Mosquitto to use Encrypted Transport</a>
-<ul>
-<li><a href="#testing-our-mqtt-broker">Testing our MQTT Broker</a></li>
-</ul></li>
-<li><a href="#running-esp8266-as-an-mqtt-enabled-iot-endpoint">Running ESP8266 as an MQTT-enabled IoT Endpoint</a>
-<ul>
-<li><a href="#getting-esp8266-connected-to-a-wifi-ap">Getting ESP8266 Connected to a WiFi AP</a></li>
-<li><a href="#adding-wificlientsecure-for-tls-transport-security">Adding WiFiClientSecure for TLS Transport Security</a></li>
-<li><a href="#adding-arduino-client-for-mqtt-support">Adding Arduino Client for MQTT Support</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#full-arduino-source-code">Full Arduino Source Code</a></li>
-<li><a href="#special-thanks">Special Thanks</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#generating-a-ca-cert-and-self-signing-an-mqtt-server-cert">Generating a CA Cert and Self-signing an MQTT Server Cert</a>
+      <ul>
+        <li><a href="#generate-a-ca-private-key">Generate a CA Private Key</a></li>
+        <li><a href="#generating-a-self-signed-ca-cert">Generating a Self-Signed CA Cert</a></li>
+        <li><a href="#generating-an-mqtt-broker-private-key">Generating an MQTT Broker Private Key</a></li>
+        <li><a href="#generating-a-mqtt-broker-certificate-signing-request-csr">Generating a MQTT Broker Certificate Signing Request (CSR)</a></li>
+        <li><a href="#generating-a-ca-signed-mqtt-broker-cert">Generating a CA-signed MQTT Broker Cert</a></li>
+        <li><a href="#extracting-our-mqtt-broker-cert-fingerprint">Extracting our MQTT Broker Cert Fingerprint</a></li>
+        <li><a href="#cert-housekeeping">Cert Housekeeping</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuring-mosquitto-to-use-encrypted-transport">Configuring Mosquitto to use Encrypted Transport</a>
+      <ul>
+        <li><a href="#testing-our-mqtt-broker">Testing our MQTT Broker</a></li>
+      </ul>
+    </li>
+    <li><a href="#running-esp8266-as-an-mqtt-enabled-iot-endpoint">Running ESP8266 as an MQTT-enabled IoT Endpoint</a>
+      <ul>
+        <li><a href="#getting-esp8266-connected-to-a-wifi-ap">Getting ESP8266 Connected to a WiFi AP</a></li>
+        <li><a href="#adding-wificlientsecure-for-tls-transport-security">Adding WiFiClientSecure for TLS Transport Security</a></li>
+        <li><a href="#adding-arduino-client-for-mqtt-support">Adding Arduino Client for MQTT Support</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#full-arduino-source-code">Full Arduino Source Code</a></li>
+    <li><a href="#special-thanks">Special Thanks</a></li>
+  </ul>
 </nav>
             
-            
-
-<h1 id="using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport">Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport</h1>
-
+            <h1 id="using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport">Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport</h1>
 <p>A while back, I purchased a few <a href="https://www.sparkfun.com/products/13711">SparkFun Thing Dev</a> boards (featuring the venerable ESP8266 WiFi chipset) and <a href="https://www.sparkfun.com/products/13815">SparkFun Beefcake Relays</a> with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the <a href="https://mqtt.org">MQTT</a> protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.</p>
-
 <p>Along the way, I ran into some problems when trying to get the ESP8266 board to successfully connect to the MQTT broker with TLS encryption enabled, so the primary focus of this post will be to explain how to generate a self-signed x509 cert for the MQTT broker, and supply that to the ESP8266 via the Arduino IDE to make a successful connection.</p>
-
 <p>I will dabble in a little more detail about my full setup beyond that, but will probably save that for another day.</p>
-
 <h2 id="prerequisites">Prerequisites</h2>
-
 <p>For the purposes of this tutorial, you only really need one of these for hardware:</p>
-
 <ul>
 <li><a href="https://www.sparkfun.com/products/13711">SparkFun Thing Dev</a> (<em>or equivalent</em>)</li>
 </ul>
-
 <p>As for software/libraries, we&rsquo;ll be using the following:</p>
-
 <ul>
 <li><a href="https://www.arduino.cc/en/Main/Software">Arduino IDE</a> - We will be using Arduino-compatible libraries for programming the ESP8266. There are certainly alternatives, but I&rsquo;m choosing this for ease of use.</li>
 <li><a href="https://mosquitto.org/">Mosquitto</a> - Mosquitto is an MQTT broker/client implementation by the Eclipse Foundation. It&rsquo;s pretty readily available for most platforms (Arch Linux in my case) and will be the central broker managing our MQTT setup. You don&rsquo;t have to use Mosquitto, specifically, but that&rsquo;s what I&rsquo;m using, so any broker configuration guidance here will be based on Mosquitto.</li>
@@ -395,751 +381,620 @@
 <li><a href="https://github.com/knolleary/pubsubclient">Arduino Client for MQTT</a> - MQTT client support for pub/sub via Arduino code.</li>
 <li><a href="https://github.com/bblanchon/ArduinoJson">Arduino JSON</a> (<em>optional</em>) - For my purposes, I will be using pub/sub messages containing JSON rather than plaintext, and this library provides full JSON support to the Arduino IDE.</li>
 </ul>
-
 <p>I won&rsquo;t go into exhaustive detail about acquiring/installing the above software, but most of the Arduino libraries can be installed via the Arduino IDE Library Manager or manually via <em>.zip</em> files from the respective Github release pages. Other software like OpenSSL and Mosquitto can be installed either manually or using your system&rsquo;s package manager.</p>
-
 <p>Some discussion about configuring the MQTT broker with Mosquitto will be addressed here, where it comes to enabling encryption and x509 cert usage.</p>
-
 <h2 id="generating-a-ca-cert-and-self-signing-an-mqtt-server-cert">Generating a CA Cert and Self-signing an MQTT Server Cert</h2>
-
 <p>In order to generate x509 certs, you have a couple of options:</p>
-
 <ol>
 <li>Get your own CA cert via a reputable cert signing authority like <a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a></li>
 <li>Self-sign a cert</li>
 <li><strong>Create your own self-signed CA and use that to sign a cert for your MQTT broker (and any other services) to use</strong></li>
 </ol>
-
 <p>In my case, my plan is to <em>not</em> have my MQTT broker exposed to the outside world. It&rsquo;s intended to be strictly used either within my LAN or through an SSH tunnel from outside my network. So, either option 2 or 3 will do here. The benefit of option 3 is that I can have a single self-signed root CA cert to put on any devices that will need to access the MQTT broker and I can generate more service-specific certs—like the MQTT broker cert—in the future using the same root CA cert without having to add more certs to all my devices.</p>
-
 <p>To begin, we&rsquo;ll need to generate a private key for our CA.</p>
-
 <h3 id="generate-a-ca-private-key">Generate a CA Private Key</h3>
-
 <p>In my case, I decided to use an elliptical curve key using the secp521r1 curve rather than an RSA key. There&rsquo;s no specific reason for this choice, but I can tell you it works with the software/libraries I&rsquo;ve listed above. Feel free to use a different key encryption, but I can&rsquo;t guarantee it will work. RSA is probably a safe alternative.</p>
-
 <p>To generate our private key we can do the following:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ openssl ecparam -name secp521r1 -genkey -noout -out ca.pem
-</code></pre>
-
-<p>If you print the key out, you should see something like this. (Don&rsquo;t worry, this is a contrived key I&rsquo;ve already discarded, but <em>don&rsquo;t</em> go around posting your private key anywhere):</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ cat ca.pem
------BEGIN EC PRIVATE KEY-----
-MIHcAgEBBEIATXmkkoaxsd7d6QvaLYOFBpVWIKkpZiIVifjWyEvG7KORzlGXuWzA
-67CkiTbUMscnzM7kn/YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPk
-co/CM1hNYyRm8Tnlq0l+rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccym
-72tTstwCruZmuc91mgC+RyRm9TxcwvztEOFDkWeKpVCrheILGH03zBqb93p9nTIa
-Ofz3Vh5+PjOoh3NGbPfS2UEKITVxTth9OZ+4rpl7Sg==
------END EC PRIVATE KEY-----
-</code></pre>
-
-<p>To keep this safe, put your newly generated key in a well-known location on your server as the &ldquo;root CA&rdquo; key and cert storage location.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ openssl ecparam -name secp521r1 -genkey -noout -out ca.pem
+</span></span></code></pre></div><p>If you print the key out, you should see something like this. (Don&rsquo;t worry, this is a contrived key I&rsquo;ve already discarded, but <em>don&rsquo;t</em> go around posting your private key anywhere):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ cat ca.pem
+</span></span><span style="display:flex;"><span>-----BEGIN EC PRIVATE KEY-----
+</span></span><span style="display:flex;"><span>MIHcAgEBBEIATXmkkoaxsd7d6QvaLYOFBpVWIKkpZiIVifjWyEvG7KORzlGXuWzA
+</span></span><span style="display:flex;"><span>67CkiTbUMscnzM7kn/YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPk
+</span></span><span style="display:flex;"><span>co/CM1hNYyRm8Tnlq0l+rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccym
+</span></span><span style="display:flex;"><span>72tTstwCruZmuc91mgC+RyRm9TxcwvztEOFDkWeKpVCrheILGH03zBqb93p9nTIa
+</span></span><span style="display:flex;"><span>Ofz3Vh5+PjOoh3NGbPfS2UEKITVxTth9OZ+4rpl7Sg<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>-----END EC PRIVATE KEY-----
+</span></span></code></pre></div><p>To keep this safe, put your newly generated key in a well-known location on your server as the &ldquo;root CA&rdquo; key and cert storage location.</p>
 <h3 id="generating-a-self-signed-ca-cert">Generating a Self-Signed CA Cert</h3>
-
-<p>Next, we need to generate a CA cert using this CA private key we&rsquo;ve just generated. First, we&rsquo;ll create an <code>openssl.conf</code> file to pass our desired params to OpenSSL. Some of this can be done without a config file, but I wanted to add mutliple alternate SubjectAlternativeName(s) (SANs) to my cert for flexibility (see the <code>alt_names</code> section below, which requires a config file like so:</p>
-
-<p><strong><code>openssl.conf:</code></strong></p>
-
-<pre><code class="language-bash">[req]
-distinguished_name = req_distinguished_name
-req_extensions = v3_req
-
-[req_distinguished_name]
-countryName = Country Name (2 letter code)
-countryName_default = US
-stateOrProvinceName = State or Province Name (full name)
-stateOrProvinceName_default = Yourstate
-localityName = Locality Name (eg, city)
-localityName_default = Yourcity
-organizationalUnitName  = Organizational Unit Name (eg, section)
-organizationalUnitName_default  = Domain Control Validated
-commonName = Organization Name (eg, company)
-commonName_default = your.server.primary.url.or.ip.address
-commonName_max  = 64
-
-[ v3_req ]
-# Extensions to add to a certificate request
-basicConstraints = CA:FALSE
-keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-subjectAltName = @alt_names
-
-[alt_names]
-DNS.1 = localhost
-IP.1 = 127.0.0.1
-IP.2 = 192.168.1.101
-</code></pre>
-
-<p>Be sure to modify the file above to your specific needs, including the items under the <code>req_distinguished_name</code> (especially <code>commonName_default</code>, which should be the primary IP address or URL of the CA) and <code>alt_names</code> sections. In my case, I&rsquo;ve added SANs for the various ways this server will be addressed, via both local interfaces (<code>localhost</code>, <code>127.0.0.1</code>) on the server itself and its LAN-wide address (<code>192.168.1.101</code>), which will be used by our IoT devices. This ensures I don&rsquo;t have to use any insecure flags/switches in software accessing the server where the address or domain name used to access the server might not match the cert&rsquo;s primary DNS entry and must be ignored.</p>
-
-<p>Now, as long as our <code>ca.pem</code> and <code>openssl.conf</code> files are in the same directory, we can generate a self-signed CA cert using this command:</p>
-
-<pre><code class="language-bash">albeec13@arch arch-cert-auth] openssl req -new -x509 -days 3650 -key ca.pem -config openssl.conf -out ca.crt -sha256
-</code></pre>
-
-<p>Note that we did not generate an intermediate Certificate Signing Request (CSR) and simply generated the cert directly, self-signed by the CA private key. You could perform that extra step (which we will do when creating the MQTT broker cert, below), but since we are self-signing anyway, it&rsquo;s an unnecessary intermediate step.</p>
-
+<p>Next, we need to generate a CA cert using this CA private key we&rsquo;ve just generated. First, we&rsquo;ll create an <code>openssl.ca.conf</code> file to pass our desired params to OpenSSL. :</p>
+<p><strong><code>openssl.ca.conf:</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>req<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>distinguished_name <span style="color:#f92672">=</span> req_distinguished_name
+</span></span><span style="display:flex;"><span>req_extensions <span style="color:#f92672">=</span> v3_req
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>req_distinguished_name<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>countryName <span style="color:#f92672">=</span> Country Name <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> letter code<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>countryName_default <span style="color:#f92672">=</span> US
+</span></span><span style="display:flex;"><span>stateOrProvinceName <span style="color:#f92672">=</span> State or Province Name <span style="color:#f92672">(</span>full name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>stateOrProvinceName_default <span style="color:#f92672">=</span> Yourstate
+</span></span><span style="display:flex;"><span>localityName <span style="color:#f92672">=</span> Locality Name <span style="color:#f92672">(</span>eg, city<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>localityName_default <span style="color:#f92672">=</span> Yourcity
+</span></span><span style="display:flex;"><span>organizationalUnitName  <span style="color:#f92672">=</span> Organizational Unit Name <span style="color:#f92672">(</span>eg, section<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>organizationalUnitName_default  <span style="color:#f92672">=</span> Domain Control Validated
+</span></span><span style="display:flex;"><span>commonName <span style="color:#f92672">=</span> Organization Name <span style="color:#f92672">(</span>eg, company<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>commonName_default <span style="color:#f92672">=</span> ca.server.primary.url.or.ip.address
+</span></span><span style="display:flex;"><span>commonName_max  <span style="color:#f92672">=</span> <span style="color:#ae81ff">64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> v3_req <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extensions to add to a certificate request</span>
+</span></span><span style="display:flex;"><span>basicConstraints <span style="color:#f92672">=</span> CA:TRUE
+</span></span><span style="display:flex;"><span>keyUsage <span style="color:#f92672">=</span> nonRepudiation, digitalSignature, keyEncipherment
+</span></span></code></pre></div><p>Be sure to modify the file above to your specific needs, including the items under the <code>req_distinguished_name</code> (especially <code>commonName_default</code>, which should be the primary IP address or URL of the CA). ==Update 10/13/2022: be sure to update the <code>commonName_default</code> field so that is not reused in the <code>openssl.mqtt.conf</code> file we will create later. If not, newer versions of OpenSSL will not allow connections when using an MQTT server cert that was signed by a CA cert using the same <code>commonName_default</code>.==</p>
+<p>Now, as long as our <code>ca.pem</code> and <code>openssl.ca.conf</code> files are in the same directory, we can generate a self-signed CA cert using this command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>albeec13@arch arch-cert-auth<span style="color:#f92672">]</span> openssl req -new -x509 -days <span style="color:#ae81ff">3650</span> -key ca.pem -config openssl.ca.conf -out ca.crt -sha256
+</span></span></code></pre></div><p>Note that we did not generate an intermediate Certificate Signing Request (CSR) and simply generated the cert directly, self-signed by the CA private key. You could perform that extra step (which we will do when creating the MQTT broker cert, below), but since we are self-signing anyway, it&rsquo;s an unnecessary intermediate step.</p>
 <p>Also note that we include <code>-sha256</code> to generate a SHA256 digest instead of the default SHA1, which is deprecated and may be rejected by clients.</p>
-
-<p>We should now have <code>ca.pem</code>, <code>ca.crt</code>, and <code>openssl.conf</code> in our CA cert storage folder. Technically you don&rsquo;t need <code>openssl.conf</code> anymore, but we will be re-using it for the client cert, so it&rsquo;s nice to have around as a template for future use.</p>
-
+<p>We should now have <code>ca.pem</code>, <code>ca.crt</code>, and <code>openssl.ca.conf</code> in our CA cert storage folder. Technically you don&rsquo;t need <code>openssl.ca.conf</code> anymore, but we will be re-using a modified version of it for the MQTT server cert, so it&rsquo;s nice to have around as a template for future use.</p>
 <h3 id="generating-an-mqtt-broker-private-key">Generating an MQTT Broker Private Key</h3>
-
 <p>In order to keep everything in a well-known location and owned by the user under which Mosquitto runs via systemd, I created a home directory for the <code>mosquitto</code> user with a cert path under <code>/home/mosquitto/mqtt-cert</code>, which will hold all necessary files for the broker to run with encryption enabled.</p>
-
 <p>In my case, my CA server is the same machine my MQTT broker is running on so I could skip a step and not bother generating a separate private key for the MQTT broker. In the interest of security, and to make this a more general tutorial for those of you not using the same machine for both, we will go through the same process as before and generate a new private key for the MQTT broker:</p>
-
-<pre><code class="language-bash">[albeec13@arch mqtt-cert]$ openssl ecparam -name secp521r1 -genkey -noout -out mqtt-serv.pem
-</code></pre>
-
-<h3 id="generating-a-mqtt-broker-certificate-signing-request-csr">Generating a MQTT Broker Certificate Signing Request (CSR)</h3>
-
-<p>Once again, we will need the <code>openssl.conf</code> file we created earlier. In my case, my CA cert and my MQTT broker cert will use identical <code>openssl.conf</code> files, since the domain names/IPs in the main and SAN list are identical. For your own purposes, you can modify a new copy of <code>openssl.conf</code> to suit your needs.</p>
-
-<p>Now that we have our private key and <code>openssl.conf</code> files in our <code>/home/mosquitto/mqtt-cert</code> directory, we can generate a new certificate signing request or CSR. The CSR is used to request an MQTT broker cert signed by the CA. When generating the CA cert, we skipped this step and simply generated and self-signed a cert without this intermediate step, but since we&rsquo;re using the CA to sign our cert now, we must generate a CSR like so:</p>
-
-<pre><code class="language-bash">[albeec13@arch mqtt-cert]$ openssl req -new -out mqtt-serv.csr -key mqtt-serv.pem -config openssl.conf -sha256
-</code></pre>
-
-<h3 id="generating-a-ca-signed-mqtt-broker-cert">Generating a CA-signed MQTT Broker Cert</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch mqtt-cert<span style="color:#f92672">]</span>$ openssl ecparam -name secp521r1 -genkey -noout -out mqtt-serv.pem
+</span></span></code></pre></div><h3 id="generating-a-mqtt-broker-certificate-signing-request-csr">Generating a MQTT Broker Certificate Signing Request (CSR)</h3>
+<p>==Update 10/13/2022: We can start with the <code>openssl.ca.conf</code> file we created earlier as a basis, but it&rsquo;s very important to update the <code>commonName_default</code> field minmally (see update below)==. For the MQTT server cert, I wanted to add mutliple alternate SubjectAlternativeName(s) (SANs) to my cert for flexibility (see the <code>alt_names</code> section below. After creating a copy of the <code>openssl.ca.conf</code> and calling it <code>openssl.mqtt.conf</code>, we can modify it as shown below:</p>
+<p><strong><code>openssl.mqtt.conf:</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>req<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>distinguished_name <span style="color:#f92672">=</span> req_distinguished_name
+</span></span><span style="display:flex;"><span>req_extensions <span style="color:#f92672">=</span> v3_req
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>req_distinguished_name<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>countryName <span style="color:#f92672">=</span> Country Name <span style="color:#f92672">(</span><span style="color:#ae81ff">2</span> letter code<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>countryName_default <span style="color:#f92672">=</span> US
+</span></span><span style="display:flex;"><span>stateOrProvinceName <span style="color:#f92672">=</span> State or Province Name <span style="color:#f92672">(</span>full name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>stateOrProvinceName_default <span style="color:#f92672">=</span> Yourstate
+</span></span><span style="display:flex;"><span>localityName <span style="color:#f92672">=</span> Locality Name <span style="color:#f92672">(</span>eg, city<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>localityName_default <span style="color:#f92672">=</span> Yourcity
+</span></span><span style="display:flex;"><span>organizationalUnitName  <span style="color:#f92672">=</span> Organizational Unit Name <span style="color:#f92672">(</span>eg, section<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>organizationalUnitName_default  <span style="color:#f92672">=</span> Domain Control Validated
+</span></span><span style="display:flex;"><span>commonName <span style="color:#f92672">=</span> Organization Name <span style="color:#f92672">(</span>eg, company<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>commonName_default <span style="color:#f92672">=</span> your.server.primary.url.or.ip.address
+</span></span><span style="display:flex;"><span>commonName_max  <span style="color:#f92672">=</span> <span style="color:#ae81ff">64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> v3_req <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extensions to add to a certificate request</span>
+</span></span><span style="display:flex;"><span>basicConstraints <span style="color:#f92672">=</span> CA:FALSE
+</span></span><span style="display:flex;"><span>keyUsage <span style="color:#f92672">=</span> nonRepudiation, digitalSignature, keyEncipherment
+</span></span><span style="display:flex;"><span>subjectAltName <span style="color:#f92672">=</span> @alt_names
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>alt_names<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>DNS.1 <span style="color:#f92672">=</span> localhost
+</span></span><span style="display:flex;"><span>IP.1 <span style="color:#f92672">=</span> 127.0.0.1
+</span></span><span style="display:flex;"><span>IP.2 <span style="color:#f92672">=</span> 192.168.1.101
+</span></span></code></pre></div><p>We change the <code>basicConstraints = CA:TRUE</code> from the CA config to say <code>CA:FALSE</code> instead, since this is the MQTT server cert, not a CA cert. I&rsquo;ve also added SANs for the various ways this server will be addressed, via both local interfaces (<code>localhost</code>, <code>127.0.0.1</code>) on the server itself and its LAN-wide address (<code>192.168.1.101</code>), which will be used by our IoT devices. This ensures I don&rsquo;t have to use any insecure flags/switches in software accessing the server where the address or domain name used to access the server might not match the cert&rsquo;s primary DNS entry and must be ignored. ==Update 10/13/2022: be sure to update the <code>commonName_default</code> field so that is different from that of the CA cert we generated earlier. If not, newer versions of OpenSSL will not allow connections when using an MQTT server cert that was signed by a CA cert using the same <code>commonName_default</code>.==</p>
+<p>Now that we have our private key and <code>openssl.mqtt.conf</code> files in our <code>/home/mosquitto/mqtt-cert</code> directory, we can generate a new certificate signing request or CSR. The CSR is used to request an MQTT broker cert signed by the CA. When generating the CA cert, we skipped this step and simply generated and self-signed a cert without this intermediate step, but since we&rsquo;re using the CA to sign our cert now, we must generate a CSR like so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch mqtt-cert<span style="color:#f92672">]</span>$ openssl req -new -out mqtt-serv.csr -key mqtt-serv.pem -config openssl.mqtt.conf -sha256
+</span></span></code></pre></div><h3 id="generating-a-ca-signed-mqtt-broker-cert">Generating a CA-signed MQTT Broker Cert</h3>
 <p>We can use now use the CSR we just generated, and our new CA we created earlier, to create and sign our MQTT broker&rsquo;s x509 cert, like so:</p>
-
-<pre><code class="language-bash">[albeec13@arch mqtt-cert]$ openssl x509 -req -days 3650 -in mqtt-serv.csr -CA /path/to/ca.crt -CAkey /path/to/ca.pem -CAcreateserial -out mqtt-serv.crt -extensions v3_req -extfile openssl.conf -sha256
-</code></pre>
-
-<p>We should now have a <code>mqtt-serv.crt</code> to use as our MQTT broker&rsquo;s x509 cert, which has been signed by our own self-signed CA cert! You will also notice that a <code>ca.srl</code> file (serial file) has been created. OpenSSL recommends using <code>-CAcreateserial</code> with <code>-CA</code> to generate a random serial number for the cert. I believe it&rsquo;s safe to delete this <code>ca.srl</code> file if you don&rsquo;t intend to specify it as an input for future certs you generate and continue to allow OpenSSL to generate random serials. (I could be wrong, so let me know in the comments.) You can also move it to your CA cert/key storage location for safekeeping instead.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch mqtt-cert<span style="color:#f92672">]</span>$ openssl x509 -req -days <span style="color:#ae81ff">3650</span> -in mqtt-serv.csr -CA /path/to/ca.crt -CAkey /path/to/ca.pem -CAcreateserial -out mqtt-serv.crt -extensions v3_req -extfile openssl.mqtt.conf -sha256
+</span></span></code></pre></div><p>We should now have a <code>mqtt-serv.crt</code> to use as our MQTT broker&rsquo;s x509 cert, which has been signed by our own self-signed CA cert! You will also notice that a <code>ca.srl</code> file (serial file) has been created. OpenSSL recommends using <code>-CAcreateserial</code> with <code>-CA</code> to generate a random serial number for the cert. I believe it&rsquo;s safe to delete this <code>ca.srl</code> file if you don&rsquo;t intend to specify it as an input for future certs you generate and continue to allow OpenSSL to generate random serials. (I could be wrong, so let me know in the comments.) You can also move it to your CA cert/key storage location for safekeeping instead.</p>
 <h3 id="extracting-our-mqtt-broker-cert-fingerprint">Extracting our MQTT Broker Cert Fingerprint</h3>
-
 <p>When we set up our ESP8266 to connect to the MQTT Broker, in addtion to using our CA cert to validate the MQTT broker&rsquo;s cert, we&rsquo;ll also want to validate the MQTT broker cert&rsquo;s SHA1 fingerprint as well. This lets us know we&rsquo;re seeing the right cert we&rsquo;ve just generated and not some other cert signed by the CA, which could be malicious. This can be done simply as so:</p>
-
-<pre><code class="language-bash">[albeec13@arch mqtt-cert]$ openssl x509 -noout -in mqtt-serv.crt -fingerprint
-SHA1 Fingerprint=FF:69:BB:AD:F0:DE:5F:89:23:F6:96:C1:03:04:23:B4:D3:D5:53:94
-</code></pre>
-
-<p>We&rsquo;ll want to make note of this signature for later. Also, note that we did not use the <code>-sha256</code> flag here and received a SHA1 fingerprint. This is because it appears that, at the time of this writing, the <code>ESP8266WiFi</code> class only supports SHA1 fingerprint matching.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch mqtt-cert<span style="color:#f92672">]</span>$ openssl x509 -noout -in mqtt-serv.crt -fingerprint
+</span></span><span style="display:flex;"><span>SHA1 Fingerprint<span style="color:#f92672">=</span>FF:69:BB:AD:F0:DE:5F:89:23:F6:96:C1:03:04:23:B4:D3:D5:53:94
+</span></span></code></pre></div><p>We&rsquo;ll want to make note of this signature for later. Also, note that we did not use the <code>-sha256</code> flag here and received a SHA1 fingerprint. This is because it appears that, at the time of this writing, the <code>ESP8266WiFi</code> class only supports SHA1 fingerprint matching.</p>
 <h3 id="cert-housekeeping">Cert Housekeeping</h3>
-
 <p>Now that we have our certs in our <code>/home/mosquitto/mqtt-cert</code> path, we can also copy the root CA cert here. This makes it easier to configure <code>/etc/mosquitto/mosquitto.conf</code> later without having to futz with permissions to our root CA path. Be sure to <code>chown</code> the all the files in this directory to the <code>mosquitto</code> user and group if you&rsquo;re using the default Mosquitto systemd unit file, or whatever user/group you&rsquo;re using to start the broker service on your machine:</p>
-
-<pre><code class="language-bash">[albeec13@arch mqtt-cert]$ sudo chown mosquitto:mosquitto *
-</code></pre>
-
-<p>In total, we <em>must</em> have <code>ca.crt</code>, <code>mqtt-serv.crt</code>, <code>mqtt-serv.pem</code> in this directory in order to start our MQTT broker service with TLS transport encryption enabled.</p>
-
-<p>You may also have <code>mqtt-serv.csr</code>, <code>ca.srl</code>, and <code>openssl.conf</code> in this directory. Leaving these here could be handy for future reference, but you don&rsquo;t need them if you would rather purge them.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch mqtt-cert<span style="color:#f92672">]</span>$ sudo chown mosquitto:mosquitto *
+</span></span></code></pre></div><p>In total, we <em>must</em> have <code>ca.crt</code>, <code>mqtt-serv.crt</code>, <code>mqtt-serv.pem</code> in this directory in order to start our MQTT broker service with TLS transport encryption enabled.</p>
+<p>You may also have <code>mqtt-serv.csr</code>, <code>ca.srl</code>, <code>openssl.ca.conf</code>, and <code>openssl.mqtt.conf</code> in this directory. Leaving these here could be handy for future reference, but you don&rsquo;t need them if you would rather purge them.</p>
 <h2 id="configuring-mosquitto-to-use-encrypted-transport">Configuring Mosquitto to use Encrypted Transport</h2>
-
-<p>With our certs in hand, it&rsquo;s pretty simple to enable encrypted transport with Mosquitto. We just need to add a few lines to the end of <code>/etc/mosquitto/mosquitto.conf</code> like so:</p>
-
+<p>With our certs in hand, it&rsquo;s pretty simple to enable encrypted transport with Mosquitto. We just need to add a few lines to the end of <code>/etc/mosquitto/mosquitto.conf</code> to configue it to use TLS/SSL encryption like so:</p>
 <p><strong><code>/etc/mosquitto/mosquitto.conf:</code></strong></p>
-
-<pre><code class="language-bash">listener 12345
-cafile /home/mosquitto/mqtt-cert/ca.crt
-certfile /home/mosquitto/mqtt-cert/mqtt-serv.crt
-keyfile /home/mosquitto/mqtt-cert/mqtt-serv.pem
-</code></pre>
-
-<p>The <code>listener</code> line just selects a port for our broker to run on, so change it to suit your needs. The other lines are pretty self-explanatory and simply point to the CA cert, the MQTT broker cert, and the MQTT server private key we generated above.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>listener <span style="color:#ae81ff">12345</span>
+</span></span><span style="display:flex;"><span>tls_version tlsv1.2
+</span></span><span style="display:flex;"><span>cafile /home/mosquitto/mqtt-cert/ca.crt
+</span></span><span style="display:flex;"><span>certfile /home/mosquitto/mqtt-cert/mqtt-serv.crt
+</span></span><span style="display:flex;"><span>keyfile /home/mosquitto/mqtt-cert/mqtt-serv.pem
+</span></span><span style="display:flex;"><span>allow_anonymous true
+</span></span></code></pre></div><p>The <code>listener</code> line just selects a port for our broker to run on, so change it to suit your needs. The other lines are pretty self-explanatory and simply point to the CA cert, the MQTT broker cert, and the MQTT server private key we generated above.</p>
+<p>==Update 10/13/2022: I&rsquo;ve added <code>allow_anonymous true</code> to config. In Mosquitto versions greater than 2.0, this line is required if you want to use transport encryption <em>without</em> any form of authentication, such as client certificate or user/password encryption. Otherwise, connecitons will be refused. I&rsquo;ve also added <code>tls_version tlsv1.2</code> as well, because newer versions of OpenSSL mayb not allow older TLS versions to operate, and generate connection errors as well.==</p>
 <p>We can then restart the Mosquitto service in systemd with:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ sudo systemctl restart mosquitto
-</code></pre>
-
-<p>&hellip;and verify it&rsquo;s working with:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ sudo systemctl status mosquitto
-</code></pre>
-
-<p>You should see that it loaded properly and is running if our config file and cert paths were all correct and with the proper permissions.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ sudo systemctl restart mosquitto
+</span></span></code></pre></div><p>&hellip;and verify it&rsquo;s working with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ sudo systemctl status mosquitto
+</span></span></code></pre></div><p>You should see that it loaded properly and is running if our config file and cert paths were all correct and with the proper permissions.</p>
 <h3 id="testing-our-mqtt-broker">Testing our MQTT Broker</h3>
-
 <p>To do a quick test, we can use the commands <code>mosquitto_pub</code> and <code>mosquitto_sub</code> from the command line to see if things are working as we expect. These are included in the <a href="https://www.archlinux.org/packages/community/x86_64/mosquitto/">Arch Linux repository for Mosquitto</a>, but you may need to install additional packages if your setup differs from mine.</p>
-
 <p>First we subscribe to a topic (here I made up a fake topic), by pointing to the broker&rsquo;s IP, the CA cert file, and adding an <code>&amp;</code> to run in the background (optionally, you can just run the commmands from separate consoles):</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ mosquitto_sub -h 127.0.0.1 -p 12345 --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/cmd -v &amp;
-[1] 13174
-</code></pre>
-
-<p>You may want to run the above command in the foreground first to make sure it connects. If it does not, check your cert paths and make sure you&rsquo;re using the right files, and that <code>mosquitto.conf</code> is properly configured.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ mosquitto_sub -h 127.0.0.1 -p <span style="color:#ae81ff">12345</span> --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/cmd -v &amp;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#ae81ff">13174</span>
+</span></span></code></pre></div><p>You may want to run the above command in the foreground first to make sure it connects. If it does not, check your cert paths and make sure you&rsquo;re using the right files, and that <code>mosquitto.conf</code> is properly configured.</p>
 <p>Next, we publish a message (in this case I&rsquo;m using JSON, which will be handy for my project, but you can use plain text) by using the same IP and CA cert info and topic:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ mosquitto_pub -h 127.0.0.1 -p 12345 --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/cmd -m {\&quot;set\&quot;:\&quot;toggle\&quot;}
-some/topic/cmd {&quot;set&quot;:&quot;toggle&quot;}
-</code></pre>
-
-<p>If it worked, you should see the topic and message payload appear in the console as shown above in the second line: <code>some/topic/cmd {&quot;set&quot;:&quot;toggle&quot;}</code></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ mosquitto_pub -h 127.0.0.1 -p <span style="color:#ae81ff">12345</span> --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/cmd -m <span style="color:#f92672">{</span><span style="color:#ae81ff">\&#34;</span>set<span style="color:#ae81ff">\&#34;</span>:<span style="color:#ae81ff">\&#34;</span>toggle<span style="color:#ae81ff">\&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>some/topic/cmd <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;set&#34;</span>:<span style="color:#e6db74">&#34;toggle&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>If it worked, you should see the topic and message payload appear in the console as shown above in the second line: <code>some/topic/cmd {&quot;set&quot;:&quot;toggle&quot;}</code></p>
 <p>And there you go! We&rsquo;ve got encrypted MQTT messages.</p>
-
 <p>Finally, you can kill the <code>mosquitto-sub</code> task by bringing it to the foreground and pressing <code>CTRL+C</code>:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ fg
-mosquitto_sub -h 127.0.0.1 -p 36969 --cafile /home/mosquitto/mqtt-cert/arch-ca.crt -t home/recroom/tv/powerstrip/cmd -v
-^C
-[albeec13@arch ~]$
-</code></pre>
-
-<p>Now that we have a working encrypted-transport MQTT broker running, we can move on to the ESP8266 side of things.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ fg
+</span></span><span style="display:flex;"><span>mosquitto_sub -h 127.0.0.1 -p <span style="color:#ae81ff">36969</span> --cafile /home/mosquitto/mqtt-cert/arch-ca.crt -t home/recroom/tv/powerstrip/cmd -v
+</span></span><span style="display:flex;"><span>^C
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$
+</span></span></code></pre></div><p>Now that we have a working encrypted-transport MQTT broker running, we can move on to the ESP8266 side of things.</p>
 <h2 id="running-esp8266-as-an-mqtt-enabled-iot-endpoint">Running ESP8266 as an MQTT-enabled IoT Endpoint</h2>
-
+<p>==Update 10/13/2022: As some of the user comments below mention, some of the below tutorial may not be 100% accurate with respect to actual server certificate validation on ESP8266. My intentions for this tutorial were to get transport encryption with anonymous connections working (or with user/pass or client cert, for that matter, which I have not implemented yet). Basically, I didnt&rsquo; want MQTT traffic sent over my network &ldquo;in the clear&rdquo;, but I&rsquo;m not concerned about validating the server I&rsquo;m connecting to, since it&rsquo;s on my internal network. Please keep that in mind when going throught he process below. Based on comments from readers and my own research of the BearSSL libraries, it does appear that the steps below will enable SSL/TLS encrypted transport, but will NOT validate the server. The best you can do is use only fingerprint validation to get at least some &ldquo;security&rdquo; that you&rsquo;re connecting to the right server. I would not use the below to connect to a public MQTT server you do not control.==</p>
 <p>As mentioned in the prerequisites, we&rsquo;ll be using <a href="https://github.com/knolleary/pubsubclient">Arduino Client for MQTT</a> to talk to our MQTT broker from the ESP8266 device. We&rsquo;ll also need the <a href="https://github.com/esp8266/Arduino">ESP8266 Arduino Library</a> to get our device working within the Arduino development environment. See the prerequisites section again for details on the hardware and software we&rsquo;re using.</p>
-
 <p>I won&rsquo;t go into the details of how to get your hardware working with the Arduino IDE, so I will just assume you&rsquo;ve got that figured out and have run through a &ldquo;hello world&rdquo; to make sure things work.</p>
-
 <p>We&rsquo;ll go through a few steps to get a working Arduino sketch, which I will go through here, followed by the full copy of the sketch.</p>
-
 <h3 id="getting-esp8266-connected-to-a-wifi-ap">Getting ESP8266 Connected to a WiFi AP</h3>
-
 <p>The first problem we&rsquo;ll tackle is connecting our device to our LAN&rsquo;s AP so that it can reach the MQTT broker&rsquo;s server. I&rsquo;ve got an LED built into the board at GPIO pin 5, and my relay signal coming out of GPIO pin 4 to my Beefcake Relay board.:</p>
-
-<pre><code class="language-c++">#include &lt;ESP8266WiFi.h&gt;
-
-#define ESP8266_LED (5)
-#define RELAY_SIGNAL_PIN (4)
-#define SERIAL_DEBUG
-
-void setup() 
-{
-  /* Set board's GPIO pins as an outputs */
-  pinMode(RELAY_SIGNAL_PIN, OUTPUT);
-  pinMode(ESP8266_LED, OUTPUT);
-
-#ifdef SERIAL_DEBUG
-  /* Initialize serial output for debug */
-  Serial.setDebugOutput(true);
-  Serial.begin(9600, SERIAL_8N1);
-  Serial.println();
-#endif
-
-  /*  Connect to local WiFi access point */
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(&quot;YourApName&quot;, &quot;yourWifiPassword&quot;);
-  
-#ifdef SERIAL_DEBUG
-  Serial.print(&quot;Connecting&quot;);
-#endif
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-#ifdef SERIAL_DEBUG
-    Serial.print(&quot;.&quot;);
-#endif
-  }
-#ifdef SERIAL_DEBUG
-  /* When WiFi connection is complete, debug log connection info */
-  Serial.println();
-  Serial.print(&quot;Connected, IP address: &quot;);
-  Serial.println(WiFi.localIP());
-#endif
-}
-
-void loop()
-{
-}
-</code></pre>
-
-<p>Running this code with serial debug enabled and the Arduino debug console open, you should see something like this:</p>
-
-<pre><code class="language-bash">Connecting......
-Connected, IP address: 192.168.1.169
-</code></pre>
-
-<h3 id="adding-wificlientsecure-for-tls-transport-security">Adding WiFiClientSecure for TLS Transport Security</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ESP8266WiFi.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define ESP8266_LED (5)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define RELAY_SIGNAL_PIN (4)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Set board&#39;s GPIO pins as an outputs */</span>
+</span></span><span style="display:flex;"><span>  pinMode(RELAY_SIGNAL_PIN, OUTPUT);
+</span></span><span style="display:flex;"><span>  pinMode(ESP8266_LED, OUTPUT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">/* Initialize serial output for debug */</span>
+</span></span><span style="display:flex;"><span>  Serial.setDebugOutput(true);
+</span></span><span style="display:flex;"><span>  Serial.begin(<span style="color:#ae81ff">9600</span>, SERIAL_8N1);
+</span></span><span style="display:flex;"><span>  Serial.println();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  Connect to local WiFi access point */</span>
+</span></span><span style="display:flex;"><span>  WiFi.mode(WIFI_STA);
+</span></span><span style="display:flex;"><span>  WiFi.begin(<span style="color:#e6db74">&#34;YourApName&#34;</span>, <span style="color:#e6db74">&#34;yourWifiPassword&#34;</span>);
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Serial.print(<span style="color:#e6db74">&#34;Connecting&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">while</span> (WiFi.status() <span style="color:#f92672">!=</span> WL_CONNECTED)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    delay(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Serial.print(<span style="color:#e6db74">&#34;.&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">/* When WiFi connection is complete, debug log connection info */</span>
+</span></span><span style="display:flex;"><span>  Serial.println();
+</span></span><span style="display:flex;"><span>  Serial.print(<span style="color:#e6db74">&#34;Connected, IP address: &#34;</span>);
+</span></span><span style="display:flex;"><span>  Serial.println(WiFi.localIP());
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">loop</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Running this code with serial debug enabled and the Arduino debug console open, you should see something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Connecting......
+</span></span><span style="display:flex;"><span>Connected, IP address: 192.168.1.169
+</span></span></code></pre></div><h3 id="adding-wificlientsecure-for-tls-transport-security">Adding WiFiClientSecure for TLS Transport Security</h3>
 <p>Next, we&rsquo;ll create a <code>WiFiClientSecure</code> obejct to let us make TLS-encrypted connections. We&rsquo;ll also include our base64-encoded PEM format CA cert and MQTT broker cert&rsquo;s SHA1 fingerprint for validation. Once again, this is contrived data and not my own, and it&rsquo;s best not to publish yours anywhere publicly.</p>
-
 <p>The CA cert can be defined as so, below the includes/defines:</p>
-
-<pre><code class="language-c++">...
-/* Certificate Authority info */
-/* CA Cert in PEM format */
-const char caCert[] PROGMEM = R&quot;EOF(
------BEGIN CERTIFICATE-----
-MIHcAgEBBEIATXmkkoaxsd7d6QvaLYOFBpVWIKkpZiIVifjWyEvG7KORzlGXuWzA
-67CkiTbUMscnzM7kn/YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPk
-co/CM1hNYyRm8Tnlq0l+rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccym
-72tTstwCruZmuc91mgC+RyRm9TxcwvztEOFDkWeKpVCrheILGH03zBqb93p9nTIa
-bUMscnzM7kn/YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPkco/CM1
-Rm8Tnlq0l+rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccymFSst74VHqF
-zBqb93p9nTIa72tTstwCruZmuc91mgC+RyRm9TxcwvztEOFDkWeKpVCrheILGH03
-zM7kn/YrwmITRDaYQ2eF0jag67CkiTbUMscnBwYFK4EEACOhgYkDgYYABAFzgTPk
-qoj2wD9XOzco/CM1hNYJ4KsQy2N6FAccymyRm8Tnlq0l+7W8iFX1C0rnFSst74VH
-rheILGH03zBqb93p9nTIa72tTc91mgC+RyRm9TxcwvztEOFDkWeKpVCstwCruZmu
-qoj2wD9XOzco/CM1hGbPfS2UEKITVxTth9OZ+4rplg==
------END CERTIFICATE-----
-)EOF&quot;;
-...
-</code></pre>
-
-<p>We also include a byte array to match against the MQTT broker cert SHA1 fingerprint we extracted earlier, and some globals needed by the <code>WiFiClientSecure</code> class to establish secure connections using the supplied CA cert and MQTT broker cert fingerprint:</p>
-
-<pre><code class="language-c++">...
-/* MQTT broker cert SHA1 fingerprint, used to validate connection to right server */
-const uint8_t mqttCertFingerprint[] = {0xFF,0x69,0xBB,0xAD,0xF0,0xDE,0x5F,0x89,0x23,0xF6,0x96,0xC1,0x03,0x04,0x23,0xB4,0xD3,0xD5,0x53,0x94};
-
-/* Other globals */
-X509List caCertX509(caCert);        /* X.509 parsed CA Cert */
-WiFiClientSecure espClient;         /* Secure client connection class, as opposed to WiFiClient */
-...
-</code></pre>
-
-<p>We can use a simple function to test if our TLS connections are being established correctly:</p>
-
-<pre><code class="language-c++">...
-#ifdef TLS_DEBUG
-/* verifytls()
- *  Test WiFiClientSecure connection using supplied cert and fingerprint
- */
-bool verifytls() {
-  bool success = false;
-    
-#ifdef SERIAL_DEBUG
-  Serial.print(&quot;Verifying TLS connection to &quot;);
-  Serial.println(&quot;192.168.1.128&quot;);
-#endif
-
-  success = espClient.connect(&quot;192.168.1.128&quot;, 12345);
-
-#ifdef SERIAL_DEBUG
-  if (success) {
-    Serial.println(&quot;Connection complete, valid cert, valid fingerprint.&quot;);
-  }
-  else {
-    Serial.println(&quot;Connection failed!&quot;);
-  }
-#endif
-
-  return (success);
-}
-#endif
-...
-</code></pre>
-
-<p>Next, we can add some code to our <code>setup()</code> function after establishing a WiFi connection. Especially important here is including the line <code>espClient.allowSelfSignedCerts()</code>. Without it, the <code>WifiClientSecure</code> library will repeatedly fail to connect without much useful error output. After enabling debugging and scanning the <a href="https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/src/WiFiClientSecureBearSSL.cpp">Arduino ESP8266 Wifi library</a>, I found that in addtion to a valid CA cert being loaded, at least one of the following must be enabled to make a successful TLS connection with self-signed certs:</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Certificate Authority info */</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* CA Cert in PEM format */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> caCert[] PROGMEM <span style="color:#f92672">=</span> R<span style="color:#e6db74">&#34;EOF(</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-----</span>BEGIN CERTIFICATE<span style="color:#f92672">-----</span>
+</span></span><span style="display:flex;"><span>MIHcAgEBBEIATXmkkoaxsd7d6QvaLYOFBpVWIKkpZiIVifjWyEvG7KORzlGXuWzA
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">67</span>CkiTbUMscnzM7kn<span style="color:#f92672">/</span>YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPk
+</span></span><span style="display:flex;"><span>co<span style="color:#f92672">/</span>CM1hNYyRm8Tnlq0l<span style="color:#f92672">+</span>rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccym
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">72</span>tTstwCruZmuc91mgC<span style="color:#f92672">+</span>RyRm9TxcwvztEOFDkWeKpVCrheILGH03zBqb93p9nTIa
+</span></span><span style="display:flex;"><span>bUMscnzM7kn<span style="color:#f92672">/</span>YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPkco<span style="color:#f92672">/</span>CM1
+</span></span><span style="display:flex;"><span>Rm8Tnlq0l<span style="color:#f92672">+</span>rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccymFSst74VHqF
+</span></span><span style="display:flex;"><span>zBqb93p9nTIa72tTstwCruZmuc91mgC<span style="color:#f92672">+</span>RyRm9TxcwvztEOFDkWeKpVCrheILGH03
+</span></span><span style="display:flex;"><span>zM7kn<span style="color:#f92672">/</span>YrwmITRDaYQ2eF0jag67CkiTbUMscnBwYFK4EEACOhgYkDgYYABAFzgTPk
+</span></span><span style="display:flex;"><span>qoj2wD9XOzco<span style="color:#f92672">/</span>CM1hNYJ4KsQy2N6FAccymyRm8Tnlq0l<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>W8iFX1C0rnFSst74VH
+</span></span><span style="display:flex;"><span>rheILGH03zBqb93p9nTIa72tTc91mgC<span style="color:#f92672">+</span>RyRm9TxcwvztEOFDkWeKpVCstwCruZmu
+</span></span><span style="display:flex;"><span>qoj2wD9XOzco<span style="color:#f92672">/</span>CM1hGbPfS2UEKITVxTth9OZ<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>rplg<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-----</span>END CERTIFICATE<span style="color:#f92672">-----</span>
+</span></span><span style="display:flex;"><span>)EOF<span style="color:#e6db74">&#34;;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>We also include a byte array to match against the MQTT broker cert SHA1 fingerprint we extracted earlier, and some globals needed by the <code>WiFiClientSecure</code> class to establish secure connections using the supplied CA cert and MQTT broker cert fingerprint:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* MQTT broker cert SHA1 fingerprint, used to validate connection to right server */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint8_t</span> mqttCertFingerprint[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0xFF</span>,<span style="color:#ae81ff">0x69</span>,<span style="color:#ae81ff">0xBB</span>,<span style="color:#ae81ff">0xAD</span>,<span style="color:#ae81ff">0xF0</span>,<span style="color:#ae81ff">0xDE</span>,<span style="color:#ae81ff">0x5F</span>,<span style="color:#ae81ff">0x89</span>,<span style="color:#ae81ff">0x23</span>,<span style="color:#ae81ff">0xF6</span>,<span style="color:#ae81ff">0x96</span>,<span style="color:#ae81ff">0xC1</span>,<span style="color:#ae81ff">0x03</span>,<span style="color:#ae81ff">0x04</span>,<span style="color:#ae81ff">0x23</span>,<span style="color:#ae81ff">0xB4</span>,<span style="color:#ae81ff">0xD3</span>,<span style="color:#ae81ff">0xD5</span>,<span style="color:#ae81ff">0x53</span>,<span style="color:#ae81ff">0x94</span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Other globals */</span>
+</span></span><span style="display:flex;"><span>X509List <span style="color:#a6e22e">caCertX509</span>(caCert);        <span style="color:#75715e">/* X.509 parsed CA Cert */</span>
+</span></span><span style="display:flex;"><span>WiFiClientSecure espClient;         <span style="color:#75715e">/* Secure client connection class, as opposed to WiFiClient */</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>We can use a simple function to test if our TLS connections are being established correctly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef TLS_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/* verifytls()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *  Test WiFiClientSecure connection using supplied cert and fingerprint
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> verifytls() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">bool</span> success <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Serial.print(<span style="color:#e6db74">&#34;Verifying TLS connection to &#34;</span>);
+</span></span><span style="display:flex;"><span>  Serial.println(<span style="color:#e6db74">&#34;192.168.1.128&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  success <span style="color:#f92672">=</span> espClient.connect(<span style="color:#e6db74">&#34;192.168.1.128&#34;</span>, <span style="color:#ae81ff">12345</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (success) {
+</span></span><span style="display:flex;"><span>    Serial.println(<span style="color:#e6db74">&#34;Connection complete, valid cert, valid fingerprint.&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    Serial.println(<span style="color:#e6db74">&#34;Connection failed!&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (success);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>...
+</span></span></code></pre></div><p>Next, we can add some code to our <code>setup()</code> function after establishing a WiFi connection. Especially important here is including the line <code>espClient.allowSelfSignedCerts()</code>. Without it, the <code>WifiClientSecure</code> library will repeatedly fail to connect without much useful error output. After enabling debugging and scanning the <a href="https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/src/WiFiClientSecureBearSSL.cpp">Arduino ESP8266 Wifi library</a>, I found that in addtion to a valid CA cert being loaded, at least one of the following must be enabled to make a successful TLS connection with self-signed certs:</p>
 <ul>
 <li><code>allowSelfSignedCerts()</code></li>
 <li><code>setFingerprint(...)</code></li>
 <li><code>setInsecure()</code></li>
 </ul>
-
 <p>Any of these three functions being called before establishing the session will allow self-signed cert connections. I chose to use the first two, which adds some redundant security checks (both cert and fingerprint must check out). I did not use <code>setInsecure</code>, because it will bypass both CA cert validation, and does not require a fingerprint check either, so you have no idea what you&rsquo;re connecting to if someone changed the device at the other end of your connection without your knowledge.</p>
-
 <p>The lines to add to <code>setup()</code> are:</p>
-
-<pre><code class="language-c++">...
-  /* Configure secure client connection */
-  espClient.setTrustAnchors(&amp;caCertX509);         /* Load CA cert into trust store */
-  espClient.allowSelfSignedCerts();               /* Enable self-signed cert support */
-  espClient.setFingerprint(mqttCertFingerprint);  /* Load SHA1 mqtt cert fingerprint for connection validation */
-  
-  /* Optionally do none of the above and allow insecure connections.                                             
-   * This will accept any certificates from the server, without validation and is not recommended.
-   */
-  //espClient.setInsecure();
-                                             
-#ifdef TLS_DEBUG
-  /* Call verifytls to verify connection can be done securely and validated - this is optional but was useful during debug */
-  verifytls();
-#endif
-...
-</code></pre>
-
-<p>Recompile and reload your device, and if all goes well the Serial debug should look something like:</p>
-
-<pre><code class="language-bash">Connecting......
-Connected, IP address: 192.168.1.169
-Verifying TLS connection to 192.168.1.128
-Connection complete, valid cert, valid fingerprint.
-</code></pre>
-
-<p>We&rsquo;re now ready to add in MQTT support!</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Configure secure client connection */</span>
+</span></span><span style="display:flex;"><span>  espClient.setTrustAnchors(<span style="color:#f92672">&amp;</span>caCertX509);         <span style="color:#75715e">/* Load CA cert into trust store */</span>
+</span></span><span style="display:flex;"><span>  espClient.allowSelfSignedCerts();               <span style="color:#75715e">/* Enable self-signed cert support */</span>
+</span></span><span style="display:flex;"><span>  espClient.setFingerprint(mqttCertFingerprint);  <span style="color:#75715e">/* Load SHA1 mqtt cert fingerprint for connection validation */</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Optionally do none of the above and allow insecure connections.                                             
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * This will accept any certificates from the server, without validation and is not recommended.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//espClient.setInsecure();
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                             
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef TLS_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">/* Call verifytls to verify connection can be done securely and validated - this is optional but was useful during debug */</span>
+</span></span><span style="display:flex;"><span>  verifytls();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>...
+</span></span></code></pre></div><p>Recompile and reload your device, and if all goes well the Serial debug should look something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Connecting......
+</span></span><span style="display:flex;"><span>Connected, IP address: 192.168.1.169
+</span></span><span style="display:flex;"><span>Verifying TLS connection to 192.168.1.128
+</span></span><span style="display:flex;"><span>Connection complete, valid cert, valid fingerprint.
+</span></span></code></pre></div><p>We&rsquo;re now ready to add in MQTT support!</p>
 <h3 id="adding-arduino-client-for-mqtt-support">Adding Arduino Client for MQTT Support</h3>
-
 <p>We will use the <a href="https://github.com/knolleary/pubsubclient">Arduino Client for MQTT</a> to enable connection from our ESP8266 to the MQTT broker using our now-secure TLS connection. First, add the library to our header section, and relevant global variables:</p>
-
-<pre><code class="language-c++">...
-#include &lt;PubSubClient.h&gt;
-...
-PubSubClient mqttClient(espClient); /* MQTT Client connection */
-String clientId = &quot;ESP8266Client-&quot;; /* MQTT client ID (will add random hex suffix during setup) */
-...
-</code></pre>
-
-<p>The <code>clientId</code> can be whatever you want, but should be unique for each device. The prefix we use here will be concatenated with a random hex ascii string later to ensure uniqueness in our LAN. The actual MQTT connection will be made by the <code>reconnect</code> function, which will be called whenever that connection has not been established or drops, and will automatically subscribe to the <code>some/topic/cmd</code> topic to listen for incoming commands:</p>
-
-<pre><code class="language-c++">...
-void reconnect() {
-  /* Loop until we're reconnected */
-  while (!mqttClient.connected()) {
-#ifdef SERIAL_DEBUG
-    Serial.print(&quot;Attempting MQTT broker connection...&quot;);
-#endif
-    /* Attempt to connect */
-    if (mqttClient.connect(clientId.c_str())) {
-#ifdef SERIAL_DEBUG
-      Serial.println(&quot;connected&quot;);
-#endif
-      /* Once connected, resubscribe */
-      mqttClient.subscribe(&quot;home/recroom/tv/powerstrip/cmd&quot;);      
-    } 
-    else {
-#ifdef SERIAL_DEBUG
-      Serial.print(&quot;Failed, rc=&quot;);
-      Serial.print(mqttClient.state());
-      Serial.println(&quot;. Trying again in 5 seconds...&quot;);
-#endif
-      /* Wait 5 seconds between retries */
-      delay(5000);
-    }
-  }
-}
-...
-</code></pre>
-
-<p>In our <code>setup()</code> function, we must add the following, making sure to put it at the end after WiFi is established and the TLS check has been completed. Using the <code>#defines</code>, serial debug and TLS validation can be disabled later on when things are working:</p>
-
-<pre><code class="language-c++">...
-  /* Configure MQTT Broker settings */
-  mqttClient.setServer(&quot;192.168.1.128&quot;,12345);
-  mqttClient.setCallback(subCallback);
-
-  /* Add random hex client ID suffix once during each reboot */
-  clientId += String(random(0xffff), HEX); 
-...
-</code></pre>
-
-<p>This code adds some random characters to our <code>clientId</code> each time we reboot the device. You can also provide unique IDs to each board using the MAC address or some other mechanism if you prefer. Also, notice the <code>subCallback</code> routine we pass in to the <code>setCallback</code> function. This is the function that will be called when our MQTT client receives a message to its subscribed topics. We&rsquo;ll get to that in a moment.</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;PubSubClient.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>...
+</span></span><span style="display:flex;"><span>PubSubClient mqttClient(espClient); <span style="color:#75715e">/* MQTT Client connection */</span>
+</span></span><span style="display:flex;"><span>String clientId <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ESP8266Client-&#34;</span>; <span style="color:#75715e">/* MQTT client ID (will add random hex suffix during setup) */</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>The <code>clientId</code> can be whatever you want, but should be unique for each device. The prefix we use here will be concatenated with a random hex ascii string later to ensure uniqueness in our LAN. The actual MQTT connection will be made by the <code>reconnect</code> function, which will be called whenever that connection has not been established or drops, and will automatically subscribe to the <code>some/topic/cmd</code> topic to listen for incoming commands:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> reconnect() {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Loop until we&#39;re reconnected */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>mqttClient.connected()) {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Serial.print(<span style="color:#e6db74">&#34;Attempting MQTT broker connection...&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">/* Attempt to connect */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (mqttClient.connect(clientId.c_str())) {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Serial.println(<span style="color:#e6db74">&#34;connected&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/* Once connected, resubscribe */</span>
+</span></span><span style="display:flex;"><span>      mqttClient.subscribe(<span style="color:#e6db74">&#34;home/recroom/tv/powerstrip/cmd&#34;</span>);      
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Serial.print(<span style="color:#e6db74">&#34;Failed, rc=&#34;</span>);
+</span></span><span style="display:flex;"><span>      Serial.print(mqttClient.state());
+</span></span><span style="display:flex;"><span>      Serial.println(<span style="color:#e6db74">&#34;. Trying again in 5 seconds...&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/* Wait 5 seconds between retries */</span>
+</span></span><span style="display:flex;"><span>      delay(<span style="color:#ae81ff">5000</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>In our <code>setup()</code> function, we must add the following, making sure to put it at the end after WiFi is established and the TLS check has been completed. Using the <code>#defines</code>, serial debug and TLS validation can be disabled later on when things are working:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Configure MQTT Broker settings */</span>
+</span></span><span style="display:flex;"><span>  mqttClient.setServer(<span style="color:#e6db74">&#34;192.168.1.128&#34;</span>,<span style="color:#ae81ff">12345</span>);
+</span></span><span style="display:flex;"><span>  mqttClient.setCallback(subCallback);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Add random hex client ID suffix once during each reboot */</span>
+</span></span><span style="display:flex;"><span>  clientId <span style="color:#f92672">+=</span> String(random(<span style="color:#ae81ff">0xffff</span>), HEX); 
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>This code adds some random characters to our <code>clientId</code> each time we reboot the device. You can also provide unique IDs to each board using the MAC address or some other mechanism if you prefer. Also, notice the <code>subCallback</code> routine we pass in to the <code>setCallback</code> function. This is the function that will be called when our MQTT client receives a message to its subscribed topics. We&rsquo;ll get to that in a moment.</p>
 <p>In our <code>loop()</code> function, we&rsquo;ll add the following code, which will try to establish an MQTT client connection whenever it&rsquo;s not present, and will call the <code>mqttClient.loop()</code> function as well, which is required for proper functionality:</p>
-
-<pre><code class="language-c++">...
-void loop() 
-{
-  /* Main loop. Attempt to re-connect to MQTT broker if connection drops, and service the mqttClient task. */
-  if(!mqttClient.connected()) {
-    reconnect();
-  }
-  mqttClient.loop();
-}
-...
-</code></pre>
-
-<p>Finally, we can flesh out the <code>subCallback</code> function. In my case, I wanted to use JSON messages to my topics, rather than just plaintext, so I&rsquo;ve included the <a href="https://github.com/bblanchon/ArduinoJson">Arduino JSON Library</a>:</p>
-
-<pre><code class="language-c++">...
-#include &lt;ArduinoJson.h&gt;
-...
-</code></pre>
-
-<p>The <code>subCallback</code> function then is written as so. Note the <code>static int pinStatus</code> which will maintain the staus of our control pin between calls. Note also, that we are expecting JSON and then parsing the JSON via some <code>if/else</code> checks to determine the course of action:</p>
-
-<pre><code class="language-c++">...
-void subCallback(char *topic, byte *payload, unsigned int length)
-{
-  static int pinStatus = LOW;
-  DynamicJsonDocument doc(256);
-  deserializeJson(doc, (char*)payload);  
-  JsonObject root = doc.as&lt;JsonObject&gt;();
-  
-#ifdef SERIAL_DEBUG  
-  serializeJson(root, Serial);
-  Serial.println();
-#endif
-
-  if(!root[&quot;set&quot;].isNull()) {
-    if(root[&quot;set&quot;] == &quot;toggle&quot;) {
-      pinStatus = !pinStatus;
-    } else if (root[&quot;set&quot;] == &quot;on&quot;) {
-      pinStatus = HIGH;
-    } else if (root[&quot;set&quot;] == &quot;off&quot;) {
-      pinStatus = LOW;
-    } else {
-      return;
-    }
-    digitalWrite(RELAY_SIGNAL_PIN, pinStatus);
-    mqttClient.publish(&quot;home/recroom/tv/powerstrip/status&quot;, pinStatus == LOW ? &quot;off&quot; : &quot;on&quot;);
-  } else if(!root[&quot;get&quot;].isNull()) {
-    if(root[&quot;get&quot;] == &quot;status&quot;) {
-      mqttClient.publish(&quot;home/recroom/tv/powerstrip/status&quot;, pinStatus == LOW ? &quot;off&quot; : &quot;on&quot;);
-    }
-  }
-}
-...
-</code></pre>
-
-<p>The expected behavior here is that someone can publish to the <code>home/recroom/tv/powerstrip/cmd</code> topic with JSON messages in the form of either:</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> loop() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Main loop. Attempt to re-connect to MQTT broker if connection drops, and service the mqttClient task. */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>mqttClient.connected()) {
+</span></span><span style="display:flex;"><span>    reconnect();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  mqttClient.loop();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Finally, we can flesh out the <code>subCallback</code> function. In my case, I wanted to use JSON messages to my topics, rather than just plaintext, so I&rsquo;ve included the <a href="https://github.com/bblanchon/ArduinoJson">Arduino JSON Library</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ArduinoJson.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>...
+</span></span></code></pre></div><p>The <code>subCallback</code> function then is written as so. Note the <code>static int pinStatus</code> which will maintain the staus of our control pin between calls. Note also, that we are expecting JSON and then parsing the JSON via some <code>if/else</code> checks to determine the course of action:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> subCallback(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>topic, byte <span style="color:#f92672">*</span>payload, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> length)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> pinStatus <span style="color:#f92672">=</span> LOW;
+</span></span><span style="display:flex;"><span>  DynamicJsonDocument <span style="color:#a6e22e">doc</span>(<span style="color:#ae81ff">256</span>);
+</span></span><span style="display:flex;"><span>  deserializeJson(doc, (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)payload);  
+</span></span><span style="display:flex;"><span>  JsonObject root <span style="color:#f92672">=</span> doc.as<span style="color:#f92672">&lt;</span>JsonObject<span style="color:#f92672">&gt;</span>();
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  serializeJson(root, Serial);
+</span></span><span style="display:flex;"><span>  Serial.println();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>root[<span style="color:#e6db74">&#34;set&#34;</span>].isNull()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(root[<span style="color:#e6db74">&#34;set&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;toggle&#34;</span>) {
+</span></span><span style="display:flex;"><span>      pinStatus <span style="color:#f92672">=</span> <span style="color:#f92672">!</span>pinStatus;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (root[<span style="color:#e6db74">&#34;set&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;on&#34;</span>) {
+</span></span><span style="display:flex;"><span>      pinStatus <span style="color:#f92672">=</span> HIGH;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (root[<span style="color:#e6db74">&#34;set&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;off&#34;</span>) {
+</span></span><span style="display:flex;"><span>      pinStatus <span style="color:#f92672">=</span> LOW;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    digitalWrite(RELAY_SIGNAL_PIN, pinStatus);
+</span></span><span style="display:flex;"><span>    mqttClient.publish(<span style="color:#e6db74">&#34;home/recroom/tv/powerstrip/status&#34;</span>, pinStatus <span style="color:#f92672">==</span> LOW <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;off&#34;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;on&#34;</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span>(<span style="color:#f92672">!</span>root[<span style="color:#e6db74">&#34;get&#34;</span>].isNull()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(root[<span style="color:#e6db74">&#34;get&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;status&#34;</span>) {
+</span></span><span style="display:flex;"><span>      mqttClient.publish(<span style="color:#e6db74">&#34;home/recroom/tv/powerstrip/status&#34;</span>, pinStatus <span style="color:#f92672">==</span> LOW <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;off&#34;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;on&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>The expected behavior here is that someone can publish to the <code>home/recroom/tv/powerstrip/cmd</code> topic with JSON messages in the form of either:</p>
 <ul>
 <li><code>{&quot;set&quot; : &quot;toggle&quot;}</code>, <code>{&quot;set&quot; : &quot;on&quot;}</code>, <code>{&quot;set&quot; : &quot;off&quot;}</code>
-
 <ul>
 <li>These will toggle, explcitly turn on, or explicitly turn off the control pin, respectively</li>
 <li>These will also return the current pin status at the topic path <code>home/recroom/tv/powerstrip/status</code> as &ldquo;on&rdquo; or &ldquo;off&rdquo; after the pin status has been modifed according to the incoming command</li>
-</ul></li>
+</ul>
+</li>
 <li><code>{&quot;get&quot; : &quot;status&quot;}</code>
-
 <ul>
 <li>This will return the current pin status at the topic path <code>home/recroom/tv/powerstrip/status</code> as &ldquo;on&rdquo; or &ldquo;off&rdquo;</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>When doing so, the ESP8266 will toggle the <code>RELAY_SIGNAL_PIN</code>, and you should see the relay board open and close the internal switch  accordingly. You can replace all references to <code>RELAY_SIGNAL_PIN</code> with <code>ESP8266_LED</code> instead to toggle the LED for your own testing purposes.</p>
-
 <p>To test that our messages are getting through to the broker and out to subscribers, we can run some commands from the terminal again while the ESP8266 is running.</p>
-
 <p>First we subscribe to the <code>home/recroom/tv/powerstrip/status</code>, which is where the ESP8266 will send its status messages:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ mosquitto_sub -h 192.168.1.128 -p 12345 --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/status -v &amp;
-[1] 14154
-</code></pre>
-
-<p>Next, we can publish a command to the ESP8266&rsquo;s topic of interest to make it toggle the LED or relay signal like so, and see right away if the device is responding with status messages:</p>
-
-<pre><code class="language-bash">[albeec13@arch ~]$ mosquitto_pub -h 192.168.1.128 -p 12345 --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/cmd -m {\&quot;set\&quot;:\&quot;toggle\&quot;}
-home/recroom/tv/powerstrip/status on
-</code></pre>
-
-<p>Looks good from that end. Now let&rsquo;s check the ESP8266 debug side. When running the code with TLS and Serial debug enabled, you should see output to the serial console similar to the following as you send test commands to the MQTT broker:</p>
-
-<pre><code class="language-bash">Connecting......
-Connected, IP address: 192.168.1.169
-Verifying TLS connection to 192.168.1.128
-Connection complete, valid cert, valid fingerprint.
-Attempting MQTT broker connection...connected
-{&quot;get&quot;:&quot;status&quot;}
-{&quot;get&quot;:&quot;status&quot;}
-{&quot;set&quot;:&quot;off&quot;}
-{&quot;set&quot;:&quot;on&quot;}
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ mosquitto_sub -h 192.168.1.128 -p <span style="color:#ae81ff">12345</span> --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/status -v &amp;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#ae81ff">14154</span>
+</span></span></code></pre></div><p>Next, we can publish a command to the ESP8266&rsquo;s topic of interest to make it toggle the LED or relay signal like so, and see right away if the device is responding with status messages:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>albeec13@arch ~<span style="color:#f92672">]</span>$ mosquitto_pub -h 192.168.1.128 -p <span style="color:#ae81ff">12345</span> --cafile /path/to/ca.crt -t home/recroom/tv/powerstrip/cmd -m <span style="color:#f92672">{</span><span style="color:#ae81ff">\&#34;</span>set<span style="color:#ae81ff">\&#34;</span>:<span style="color:#ae81ff">\&#34;</span>toggle<span style="color:#ae81ff">\&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>home/recroom/tv/powerstrip/status on
+</span></span></code></pre></div><p>Looks good from that end. Now let&rsquo;s check the ESP8266 debug side. When running the code with TLS and Serial debug enabled, you should see output to the serial console similar to the following as you send test commands to the MQTT broker:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Connecting......
+</span></span><span style="display:flex;"><span>Connected, IP address: 192.168.1.169
+</span></span><span style="display:flex;"><span>Verifying TLS connection to 192.168.1.128
+</span></span><span style="display:flex;"><span>Connection complete, valid cert, valid fingerprint.
+</span></span><span style="display:flex;"><span>Attempting MQTT broker connection...connected
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;get&#34;</span>:<span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;get&#34;</span>:<span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;set&#34;</span>:<span style="color:#e6db74">&#34;off&#34;</span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;set&#34;</span>:<span style="color:#e6db74">&#34;on&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>And that&rsquo;s a wrap! We&rsquo;ve now gone through all the steps to:</p>
-
 <ul>
 <li>Create a self-signed certificate authority (CA) cert</li>
 <li>Use our CA to sign a MQTT broker cert</li>
 <li>Use our MQTT broker cert and CA cert to configure Mosquitto to run with TLS transport encryption</li>
 <li>Write Arduino code for an ESP8266 board to:
-
 <ul>
 <li>Connect to our WiFi network</li>
 <li>Establish TLS connections using our CA cert and MQTT broker cert fingerprint</li>
 <li>Connect to our MQTT broker as a client</li>
 <li>Publish and subscribe to channels and operate a relay or LED based on JSON commands via the MQTT broker</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>With this as a basis, you can also do things like create your own channels and command structure, with or without JSON, and proceed with enabling MQTT client authentication using either passwords (since they will no longer be in the clear with TLS enabled) or client certs (which you can create/sign with your CA cert).</p>
-
 <h2 id="full-arduino-source-code">Full Arduino Source Code</h2>
-
 <p>Below, you can find the entirety of the source code I described above:</p>
-
-<pre><code class="language-c++">#include &lt;ESP8266WiFi.h&gt;
-#include &lt;PubSubClient.h&gt;
-#include &lt;ArduinoJson.h&gt;
-
-#define ESP8266_LED (5)
-#define RELAY_SIGNAL_PIN (4)
-//#define SERIAL_DEBUG
-//#define TLS_DEBUG
-
-/* Certificate Authority info */
-/* CA Cert in PEM format */
-const char caCert[] PROGMEM = R&quot;EOF(
------BEGIN CERTIFICATE-----
-MIHcAgEBBEIATXmkkoaxsd7d6QvaLYOFBpVWIKkpZiIVifjWyEvG7KORzlGXuWzA
-67CkiTbUMscnzM7kn/YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPk
-co/CM1hNYyRm8Tnlq0l+rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccym
-72tTstwCruZmuc91mgC+RyRm9TxcwvztEOFDkWeKpVCrheILGH03zBqb93p9nTIa
-bUMscnzM7kn/YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPkco/CM1
-Rm8Tnlq0l+rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccymFSst74VHqF
-zBqb93p9nTIa72tTstwCruZmuc91mgC+RyRm9TxcwvztEOFDkWeKpVCrheILGH03
-zM7kn/YrwmITRDaYQ2eF0jag67CkiTbUMscnBwYFK4EEACOhgYkDgYYABAFzgTPk
-qoj2wD9XOzco/CM1hNYJ4KsQy2N6FAccymyRm8Tnlq0l+7W8iFX1C0rnFSst74VH
-rheILGH03zBqb93p9nTIa72tTc91mgC+RyRm9TxcwvztEOFDkWeKpVCstwCruZmu
-qoj2wD9XOzco/CM1hGbPfS2UEKITVxTth9OZ+4rplg==
------END CERTIFICATE-----
-)EOF&quot;;
-
-/* MQTT broker cert SHA1 fingerprint, used to validate connection to right server */
-const uint8_t mqttCertFingerprint[] = {0xFF,0x69,0xBB,0xAD,0xF0,0xDE,0x5F,0x89,0x23,0xF6,0x96,0xC1,0x03,0x04,0x23,0xB4,0xD3,0xD5,0x53,0x94};
-
-/* Other globals */
-X509List caCertX509(caCert);        /* X.509 parsed CA Cert */
-WiFiClientSecure espClient;         /* Secure client connection class, as opposed to WiFiClient */
-PubSubClient mqttClient(espClient); /* MQTT Client connection */
-String clientId = &quot;ESP8266Client-&quot;; /* MQTT client ID (will add random hex suffix during setup) */
-
-#ifdef TLS_DEBUG
-/* verifytls()
- *  Test WiFiClientSecure connection using supplied cert and fingerprint
- */
-bool verifytls() {
-  bool success = false;
-    
-#ifdef SERIAL_DEBUG
-  Serial.print(&quot;Verifying TLS connection to &quot;);
-  Serial.println(&quot;192.168.1.128&quot;);
-#endif
-
-  success = espClient.connect(&quot;192.168.1.128&quot;, 12345);
-
-#ifdef SERIAL_DEBUG
-  if (success) {
-    Serial.println(&quot;Connection complete, valid cert, valid fingerprint.&quot;);
-  }
-  else {
-    Serial.println(&quot;Connection failed!&quot;);
-  }
-#endif
-
-  return (success);
-}
-#endif
-
-void reconnect() {
-  /* Loop until we're reconnected */
-  while (!mqttClient.connected()) {
-#ifdef SERIAL_DEBUG
-    Serial.print(&quot;Attempting MQTT broker connection...&quot;);
-#endif
-    /* Attempt to connect */
-    if (mqttClient.connect(clientId.c_str())) {
-#ifdef SERIAL_DEBUG
-      Serial.println(&quot;connected&quot;);
-#endif
-      /* Once connected, resubscribe */
-      mqttClient.subscribe(&quot;home/recroom/tv/powerstrip/cmd&quot;);      
-    } 
-    else {
-#ifdef SERIAL_DEBUG
-      Serial.print(&quot;Failed, rc=&quot;);
-      Serial.print(mqttClient.state());
-      Serial.println(&quot;. Trying again in 5 seconds...&quot;);
-#endif
-      /* Wait 5 seconds between retries */
-      delay(5000);
-    }
-  }
-}
-
-void setup() 
-{
-  /* Set board's GPIO pins as outputs */
-  pinMode(RELAY_SIGNAL_PIN, OUTPUT);
-  pinMode(ESP8266_LED, OUTPUT);
-
-#ifdef SERIAL_DEBUG
-  /* Initialize serial output for debug */
-  Serial.setDebugOutput(true);
-  Serial.begin(9600, SERIAL_8N1);
-  Serial.println();
-#endif
-
-  /*  Connect to local WiFi access point */
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(&quot;YourApName&quot;, &quot;yourWifiPassword&quot;);
-
-#ifdef SERIAL_DEBUG
-  Serial.print(&quot;Connecting&quot;);
-#endif
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-#ifdef SERIAL_DEBUG
-    Serial.print(&quot;.&quot;);
-#endif
-  }
-#ifdef SERIAL_DEBUG
-  /* When WiFi connection is complete, debug log connection info */
-  Serial.println();
-  Serial.print(&quot;Connected, IP address: &quot;);
-  Serial.println(WiFi.localIP());
-#endif
-
-  /* Configure secure client connection */
-  espClient.setTrustAnchors(&amp;caCertX509);         /* Load CA cert into trust store */
-  espClient.allowSelfSignedCerts();               /* Enable self-signed cert support */
-  espClient.setFingerprint(mqttCertFingerprint);  /* Load SHA1 mqtt cert fingerprint for connection validation */
-  
-  /* Optionally do none of the above and allow insecure connections.                                             
-   * This will accept any certificates from the server, without validation and is not recommended.
-   */
-  //espClient.setInsecure();
-                                             
-#ifdef TLS_DEBUG
-  /* Call verifytls to verify connection can be done securely and validated - this is optional but was useful during debug */
-  verifytls();
-#endif
-
-  /* Configure MQTT Broker settings */
-  mqttClient.setServer(&quot;192.168.1.128&quot;,12345);
-  mqttClient.setCallback(subCallback);
-
-  /* Add random hex client ID suffix once during each reboot */
-  clientId += String(random(0xffff), HEX); 
-}
-
-void loop() 
-{
-  /* Main loop. Attempt to re-connect to MQTT broker if connection drops, and service the mqttClient task. */
-  if(!mqttClient.connected()) {
-    reconnect();
-  }
-  mqttClient.loop();
-}
-
-void subCallback(char *topic, byte *payload, unsigned int length)
-{
-  static int pinStatus = LOW;
-  DynamicJsonDocument doc(256);
-  deserializeJson(doc, (char*)payload);  
-  JsonObject root = doc.as&lt;JsonObject&gt;();
-  
-#ifdef SERIAL_DEBUG  
-  serializeJson(root, Serial);
-  Serial.println();
-#endif
-
-  if(!root[&quot;set&quot;].isNull()) {
-    if(root[&quot;set&quot;] == &quot;toggle&quot;) {
-      pinStatus = !pinStatus;
-    } else if (root[&quot;set&quot;] == &quot;on&quot;) {
-      pinStatus = HIGH;
-    } else if (root[&quot;set&quot;] == &quot;off&quot;) {
-      pinStatus = LOW;
-    } else {
-      return;
-    }
-    digitalWrite(RELAY_SIGNAL_PIN, pinStatus);
-    mqttClient.publish(&quot;home/recroom/tv/powerstrip/status&quot;, pinStatus == LOW ? &quot;off&quot; : &quot;on&quot;);
-  } else if(!root[&quot;get&quot;].isNull()) {
-    if(root[&quot;get&quot;] == &quot;status&quot;) {
-      mqttClient.publish(&quot;home/recroom/tv/powerstrip/status&quot;, pinStatus == LOW ? &quot;off&quot; : &quot;on&quot;);
-    }
-  }
-}
-</code></pre>
-
-<h2 id="special-thanks">Special Thanks</h2>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ESP8266WiFi.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;PubSubClient.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ArduinoJson.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define ESP8266_LED (5)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define RELAY_SIGNAL_PIN (4)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">//#define SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//#define TLS_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Certificate Authority info */</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* CA Cert in PEM format */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> caCert[] PROGMEM <span style="color:#f92672">=</span> R<span style="color:#e6db74">&#34;EOF(</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-----</span>BEGIN CERTIFICATE<span style="color:#f92672">-----</span>
+</span></span><span style="display:flex;"><span>MIHcAgEBBEIATXmkkoaxsd7d6QvaLYOFBpVWIKkpZiIVifjWyEvG7KORzlGXuWzA
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">67</span>CkiTbUMscnzM7kn<span style="color:#f92672">/</span>YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPk
+</span></span><span style="display:flex;"><span>co<span style="color:#f92672">/</span>CM1hNYyRm8Tnlq0l<span style="color:#f92672">+</span>rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccym
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">72</span>tTstwCruZmuc91mgC<span style="color:#f92672">+</span>RyRm9TxcwvztEOFDkWeKpVCrheILGH03zBqb93p9nTIa
+</span></span><span style="display:flex;"><span>bUMscnzM7kn<span style="color:#f92672">/</span>YrwmITRDaYQ2eF0jagBwYFK4EEACOhgYkDgYYABAFzgTPkco<span style="color:#f92672">/</span>CM1
+</span></span><span style="display:flex;"><span>Rm8Tnlq0l<span style="color:#f92672">+</span>rnFSst74VHqoj2wD9XOz7W8iFX1C0J4KsQy2N6FAccymFSst74VHqF
+</span></span><span style="display:flex;"><span>zBqb93p9nTIa72tTstwCruZmuc91mgC<span style="color:#f92672">+</span>RyRm9TxcwvztEOFDkWeKpVCrheILGH03
+</span></span><span style="display:flex;"><span>zM7kn<span style="color:#f92672">/</span>YrwmITRDaYQ2eF0jag67CkiTbUMscnBwYFK4EEACOhgYkDgYYABAFzgTPk
+</span></span><span style="display:flex;"><span>qoj2wD9XOzco<span style="color:#f92672">/</span>CM1hNYJ4KsQy2N6FAccymyRm8Tnlq0l<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>W8iFX1C0rnFSst74VH
+</span></span><span style="display:flex;"><span>rheILGH03zBqb93p9nTIa72tTc91mgC<span style="color:#f92672">+</span>RyRm9TxcwvztEOFDkWeKpVCstwCruZmu
+</span></span><span style="display:flex;"><span>qoj2wD9XOzco<span style="color:#f92672">/</span>CM1hGbPfS2UEKITVxTth9OZ<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>rplg<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-----</span>END CERTIFICATE<span style="color:#f92672">-----</span>
+</span></span><span style="display:flex;"><span>)EOF<span style="color:#e6db74">&#34;;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* MQTT broker cert SHA1 fingerprint, used to validate connection to right server */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint8_t</span> mqttCertFingerprint[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0xFF</span>,<span style="color:#ae81ff">0x69</span>,<span style="color:#ae81ff">0xBB</span>,<span style="color:#ae81ff">0xAD</span>,<span style="color:#ae81ff">0xF0</span>,<span style="color:#ae81ff">0xDE</span>,<span style="color:#ae81ff">0x5F</span>,<span style="color:#ae81ff">0x89</span>,<span style="color:#ae81ff">0x23</span>,<span style="color:#ae81ff">0xF6</span>,<span style="color:#ae81ff">0x96</span>,<span style="color:#ae81ff">0xC1</span>,<span style="color:#ae81ff">0x03</span>,<span style="color:#ae81ff">0x04</span>,<span style="color:#ae81ff">0x23</span>,<span style="color:#ae81ff">0xB4</span>,<span style="color:#ae81ff">0xD3</span>,<span style="color:#ae81ff">0xD5</span>,<span style="color:#ae81ff">0x53</span>,<span style="color:#ae81ff">0x94</span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Other globals */</span>
+</span></span><span style="display:flex;"><span>X509List <span style="color:#a6e22e">caCertX509</span>(caCert);        <span style="color:#75715e">/* X.509 parsed CA Cert */</span>
+</span></span><span style="display:flex;"><span>WiFiClientSecure espClient;         <span style="color:#75715e">/* Secure client connection class, as opposed to WiFiClient */</span>
+</span></span><span style="display:flex;"><span>PubSubClient <span style="color:#a6e22e">mqttClient</span>(espClient); <span style="color:#75715e">/* MQTT Client connection */</span>
+</span></span><span style="display:flex;"><span>String clientId <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ESP8266Client-&#34;</span>; <span style="color:#75715e">/* MQTT client ID (will add random hex suffix during setup) */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef TLS_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/* verifytls()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> *  Test WiFiClientSecure connection using supplied cert and fingerprint
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">verifytls</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">bool</span> success <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Serial.print(<span style="color:#e6db74">&#34;Verifying TLS connection to &#34;</span>);
+</span></span><span style="display:flex;"><span>  Serial.println(<span style="color:#e6db74">&#34;192.168.1.128&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  success <span style="color:#f92672">=</span> espClient.connect(<span style="color:#e6db74">&#34;192.168.1.128&#34;</span>, <span style="color:#ae81ff">12345</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (success) {
+</span></span><span style="display:flex;"><span>    Serial.println(<span style="color:#e6db74">&#34;Connection complete, valid cert, valid fingerprint.&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    Serial.println(<span style="color:#e6db74">&#34;Connection failed!&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (success);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reconnect</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Loop until we&#39;re reconnected */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>mqttClient.connected()) {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Serial.print(<span style="color:#e6db74">&#34;Attempting MQTT broker connection...&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">/* Attempt to connect */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (mqttClient.connect(clientId.c_str())) {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Serial.println(<span style="color:#e6db74">&#34;connected&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/* Once connected, resubscribe */</span>
+</span></span><span style="display:flex;"><span>      mqttClient.subscribe(<span style="color:#e6db74">&#34;home/recroom/tv/powerstrip/cmd&#34;</span>);      
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Serial.print(<span style="color:#e6db74">&#34;Failed, rc=&#34;</span>);
+</span></span><span style="display:flex;"><span>      Serial.print(mqttClient.state());
+</span></span><span style="display:flex;"><span>      Serial.println(<span style="color:#e6db74">&#34;. Trying again in 5 seconds...&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">/* Wait 5 seconds between retries */</span>
+</span></span><span style="display:flex;"><span>      delay(<span style="color:#ae81ff">5000</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Set board&#39;s GPIO pins as outputs */</span>
+</span></span><span style="display:flex;"><span>  pinMode(RELAY_SIGNAL_PIN, OUTPUT);
+</span></span><span style="display:flex;"><span>  pinMode(ESP8266_LED, OUTPUT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">/* Initialize serial output for debug */</span>
+</span></span><span style="display:flex;"><span>  Serial.setDebugOutput(true);
+</span></span><span style="display:flex;"><span>  Serial.begin(<span style="color:#ae81ff">9600</span>, SERIAL_8N1);
+</span></span><span style="display:flex;"><span>  Serial.println();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  Connect to local WiFi access point */</span>
+</span></span><span style="display:flex;"><span>  WiFi.mode(WIFI_STA);
+</span></span><span style="display:flex;"><span>  WiFi.begin(<span style="color:#e6db74">&#34;YourApName&#34;</span>, <span style="color:#e6db74">&#34;yourWifiPassword&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Serial.print(<span style="color:#e6db74">&#34;Connecting&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">while</span> (WiFi.status() <span style="color:#f92672">!=</span> WL_CONNECTED)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    delay(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Serial.print(<span style="color:#e6db74">&#34;.&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">/* When WiFi connection is complete, debug log connection info */</span>
+</span></span><span style="display:flex;"><span>  Serial.println();
+</span></span><span style="display:flex;"><span>  Serial.print(<span style="color:#e6db74">&#34;Connected, IP address: &#34;</span>);
+</span></span><span style="display:flex;"><span>  Serial.println(WiFi.localIP());
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Configure secure client connection */</span>
+</span></span><span style="display:flex;"><span>  espClient.setTrustAnchors(<span style="color:#f92672">&amp;</span>caCertX509);         <span style="color:#75715e">/* Load CA cert into trust store */</span>
+</span></span><span style="display:flex;"><span>  espClient.allowSelfSignedCerts();               <span style="color:#75715e">/* Enable self-signed cert support */</span>
+</span></span><span style="display:flex;"><span>  espClient.setFingerprint(mqttCertFingerprint);  <span style="color:#75715e">/* Load SHA1 mqtt cert fingerprint for connection validation */</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Optionally do none of the above and allow insecure connections.                                             
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * This will accept any certificates from the server, without validation and is not recommended.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//espClient.setInsecure();
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                             
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef TLS_DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">/* Call verifytls to verify connection can be done securely and validated - this is optional but was useful during debug */</span>
+</span></span><span style="display:flex;"><span>  verifytls();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Configure MQTT Broker settings */</span>
+</span></span><span style="display:flex;"><span>  mqttClient.setServer(<span style="color:#e6db74">&#34;192.168.1.128&#34;</span>,<span style="color:#ae81ff">12345</span>);
+</span></span><span style="display:flex;"><span>  mqttClient.setCallback(subCallback);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Add random hex client ID suffix once during each reboot */</span>
+</span></span><span style="display:flex;"><span>  clientId <span style="color:#f92672">+=</span> String(random(<span style="color:#ae81ff">0xffff</span>), HEX); 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">loop</span>() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* Main loop. Attempt to re-connect to MQTT broker if connection drops, and service the mqttClient task. */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>mqttClient.connected()) {
+</span></span><span style="display:flex;"><span>    reconnect();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  mqttClient.loop();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">subCallback</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>topic, byte <span style="color:#f92672">*</span>payload, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> length)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> pinStatus <span style="color:#f92672">=</span> LOW;
+</span></span><span style="display:flex;"><span>  DynamicJsonDocument doc(<span style="color:#ae81ff">256</span>);
+</span></span><span style="display:flex;"><span>  deserializeJson(doc, (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)payload);  
+</span></span><span style="display:flex;"><span>  JsonObject root <span style="color:#f92672">=</span> doc.as<span style="color:#f92672">&lt;</span>JsonObject<span style="color:#f92672">&gt;</span>();
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef SERIAL_DEBUG  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  serializeJson(root, Serial);
+</span></span><span style="display:flex;"><span>  Serial.println();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>root[<span style="color:#e6db74">&#34;set&#34;</span>].isNull()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(root[<span style="color:#e6db74">&#34;set&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;toggle&#34;</span>) {
+</span></span><span style="display:flex;"><span>      pinStatus <span style="color:#f92672">=</span> <span style="color:#f92672">!</span>pinStatus;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (root[<span style="color:#e6db74">&#34;set&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;on&#34;</span>) {
+</span></span><span style="display:flex;"><span>      pinStatus <span style="color:#f92672">=</span> HIGH;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (root[<span style="color:#e6db74">&#34;set&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;off&#34;</span>) {
+</span></span><span style="display:flex;"><span>      pinStatus <span style="color:#f92672">=</span> LOW;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    digitalWrite(RELAY_SIGNAL_PIN, pinStatus);
+</span></span><span style="display:flex;"><span>    mqttClient.publish(<span style="color:#e6db74">&#34;home/recroom/tv/powerstrip/status&#34;</span>, pinStatus <span style="color:#f92672">==</span> LOW <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;off&#34;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;on&#34;</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>root[<span style="color:#e6db74">&#34;get&#34;</span>].isNull()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(root[<span style="color:#e6db74">&#34;get&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;status&#34;</span>) {
+</span></span><span style="display:flex;"><span>      mqttClient.publish(<span style="color:#e6db74">&#34;home/recroom/tv/powerstrip/status&#34;</span>, pinStatus <span style="color:#f92672">==</span> LOW <span style="color:#f92672">?</span> <span style="color:#e6db74">&#34;off&#34;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;on&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="special-thanks">Special Thanks</h2>
 <p>In addition to all the great tools and libraries mentioned in the prerequisites, the following links were helpful to me during my research:</p>
-
 <ul>
 <li><a href="https://wiki.openssl.org/index.php/Command_Line_Elliptic_Curve_Operations">Command Line Elliptic Curve Operations</a></li>
 <li><a href="http://apetec.com/support/GenerateSAN-CSR.htm">Configuring ssl requests with SubjectAltName with openssl</a></li>
@@ -1147,12 +1002,11 @@ void subCallback(char *topic, byte *payload, unsigned int length)
 <li><a href="https://datacenteroverlords.com/2012/03/01/creating-your-own-ssl-certificate-authority/">Creating Your Own SSL Certificate Authority (and Dumping Self Signed Certs)</a></li>
 <li><a href="https://arduinojson.org/v6/doc/">Arduino JSON Reference</a></li>
 </ul>
-
 <p>Please comment below if this helped you, or if you have any suggestions for improvements!</p>
 
         </div>
         <footer class="article-footer">
-    <a data-url="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" data-id="9f5d6f51201d450842bf953f35f9f094" class="article-share-link">
+    <a data-url="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" data-id=" 9f5d6f51201d450842bf953f35f9f094 " class="article-share-link">
         <i class="fa fa-share"></i>
         Share
     </a>
@@ -1252,7 +1106,7 @@ void subCallback(char *topic, byte *payload, unsigned int length)
     <div id="disqus_thread">
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -1521,7 +1375,7 @@ void subCallback(char *topic, byte *payload, unsigned int length)
 <footer id="footer">
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019
+      &copy; 2022
       Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
     </div>
   </div>
@@ -1540,7 +1394,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://blog.thewalr.us/fancybox/jquery.fancybox.pack.js"></script>
 <script src="https://blog.thewalr.us/js/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
