@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <title>TheWalrus</title>
+    <title>Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port &middot; TheWalrus</title>
     <meta name="generator" content="Hugo 0.142.0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -10,10 +10,10 @@
       <meta name="description" content="">
     
     
-      <link href="/" rel="alternate" type="application/rss+xml" title="TheWalrus" />
-      <link href="/" rel="feed" type="application/rss+xml" title="TheWalrus" />
+      <link href="/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/" rel="alternate" type="application/rss+xml" title="TheWalrus" />
+      <link href="/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/" rel="feed" type="application/rss+xml" title="TheWalrus" />
     
-    <link rel="canonical" href="https://blog.thewalr.us/"/>
+    <link rel="canonical" href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/"/>
     <link rel="icon" href="https://blog.thewalr.us/favicon.ico">
     <link rel="apple-touch-icon" href="https://blog.thewalr.us/apple-touch-icon.png"/>
     <link rel="stylesheet" href="https://blog.thewalr.us/css/style.css">
@@ -23,19 +23,30 @@
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-    <meta property="og:url" content="https://blog.thewalr.us/">
+    <meta property="og:url" content="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/">
   <meta property="og:site_name" content="TheWalrus">
-  <meta property="og:title" content="TheWalrus">
+  <meta property="og:title" content="Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port">
+  <meta property="og:description" content="The Problem If you’ve ever tinkered self-hostingi web projects, you’re probably already familiar with one of the major webservers like Apache or nginx. You’ve likelyalso hosted other non-HTTP(s) services such as SSH, for headless access to a Linux machine or, as I like to do, tunneling your browser traffic through a home Linux server via a SOCKS proxy. This is especially useful when traveling and using open or un-secured WiFi networks, such as at hotels or coffee shops, to prevent your connection from being monitored surreptitiously. Generally tunneling like that works well, and you can run your HTTPS traffic on the standard port 443, and SSH on 22 (or better yet some high-numbered non-standard port). However, you may occasionally run into a situation where outbound ports on that network are blocked, making it difficult or impossible to reach your SSH server. Generally, ports like 80 and 443 are always open for outbound traffic to avoid breaking normal HTTP/HTTPS traffic, and we can utilize this fact to get around the blocked port problem.">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2019-04-05T22:35:10-05:00">
+    <meta property="article:modified_time" content="2019-04-05T22:35:10-05:00">
+    <meta property="article:tag" content="How-To">
+    <meta property="article:tag" content="Nginx">
+    <meta property="article:tag" content="Ssh">
 
     
-  <meta itemprop="name" content="TheWalrus">
+  <meta itemprop="name" content="Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port">
+  <meta itemprop="description" content="The Problem If you’ve ever tinkered self-hostingi web projects, you’re probably already familiar with one of the major webservers like Apache or nginx. You’ve likelyalso hosted other non-HTTP(s) services such as SSH, for headless access to a Linux machine or, as I like to do, tunneling your browser traffic through a home Linux server via a SOCKS proxy. This is especially useful when traveling and using open or un-secured WiFi networks, such as at hotels or coffee shops, to prevent your connection from being monitored surreptitiously. Generally tunneling like that works well, and you can run your HTTPS traffic on the standard port 443, and SSH on 22 (or better yet some high-numbered non-standard port). However, you may occasionally run into a situation where outbound ports on that network are blocked, making it difficult or impossible to reach your SSH server. Generally, ports like 80 and 443 are always open for outbound traffic to avoid breaking normal HTTP/HTTPS traffic, and we can utilize this fact to get around the blocked port problem.">
   <meta itemprop="datePublished" content="2019-04-05T22:35:10-05:00">
   <meta itemprop="dateModified" content="2019-04-05T22:35:10-05:00">
+  <meta itemprop="wordCount" content="1550">
+  <meta itemprop="keywords" content="How-To,Nginx,Ssh">
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="TheWalrus">
+  <meta name="twitter:title" content="Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port">
+  <meta name="twitter:description" content="The Problem If you’ve ever tinkered self-hostingi web projects, you’re probably already familiar with one of the major webservers like Apache or nginx. You’ve likelyalso hosted other non-HTTP(s) services such as SSH, for headless access to a Linux machine or, as I like to do, tunneling your browser traffic through a home Linux server via a SOCKS proxy. This is especially useful when traveling and using open or un-secured WiFi networks, such as at hotels or coffee shops, to prevent your connection from being monitored surreptitiously. Generally tunneling like that works well, and you can run your HTTPS traffic on the standard port 443, and SSH on 22 (or better yet some high-numbered non-standard port). However, you may occasionally run into a situation where outbound ports on that network are blocked, making it difficult or impossible to reach your SSH server. Generally, ports like 80 and 443 are always open for outbound traffic to avoid breaking normal HTTP/HTTPS traffic, and we can utilize this fact to get around the blocked port problem.">
 
     
 
@@ -253,15 +264,11 @@
     
 
     
-    
-
-<article class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
     <div class="article-inner">
         
-        <a href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/" itemprop="url">
             <img src="https://blog.thewalr.us/banners/nginx.png" class="article-banner">
         
-        </a>
 
         <header class="article-header">
     <a href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/">
@@ -322,15 +329,113 @@
 </header>
 
         <div class="article-entry" itemprop="articleBody">
-            <p>
-                <h1 id="the-problem">The Problem</h1>
+            
+                <h2>Table Of Contents</h2>
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#using-nginx-stream-directive-to-detect-incoming-connection-type">Using Nginx Stream Directive to Detect Incoming Connection type</a></li>
+    <li><a href="#the-configuration">The Configuration</a></li>
+  </ul>
+</nav>
+            
+            <h1 id="the-problem">The Problem</h1>
 <p>If you&rsquo;ve ever tinkered self-hostingi web projects, you&rsquo;re probably already familiar with one of the major webservers like Apache or nginx. You&rsquo;ve likelyalso hosted other non-HTTP(s) services such as SSH, for headless access to a Linux machine or, as I like to do, tunneling your browser traffic through a home Linux server via a SOCKS proxy. This is especially useful when traveling and using open or un-secured WiFi networks, such as at hotels or coffee shops, to prevent your connection from being monitored surreptitiously. Generally tunneling like that works well, and you can run your HTTPS traffic on the standard port 443, and SSH on 22 (or better yet some high-numbered non-standard port). However, you may occasionally run into a situation where outbound ports on that network are blocked, making it difficult or impossible to reach your SSH server. Generally, ports like 80 and 443 are always open for outbound traffic to avoid breaking normal HTTP/HTTPS traffic, and we can utilize this fact to get around the blocked port problem.</p>
-            </p>
-            <p class="article-more-link">
-                <a href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/">
-                    Read more
-                </a>
-            </p>
+<p>The web server <a href="https://nginx.org/en/">nginx</a> has a mechanism by which we can use a single incoming open port, in this case 443 (HTTPS), to accept incoming HTTPS and SSH connection requests, so that we can access our remote machine even on networks that block other ports, and still host other HTTPS servers and services on the same machine. Continue reading to find out how.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>I will assume that you are running a suitable platform, such as my personal favorite <a href="https://archlinux.org/">Arch Linux</a>, and can find and install a recent version of nginx onto your system.</p>
+<p>Secondly, I will assume you&rsquo;ve also done the work necessary related to firewall configuration and port forwarding to enable nginx to accept and handle HTTPS or SSH requests coming in to your public IP on port 443. Once again, if this is unfamiliar, there are online resources to explain this, but I imagine if you&rsquo;re reading this, you already know how to do those things.</p>
+<p>For this tutorial, I&rsquo;m assuming all nginx configurations are being done in <code>/etc/nginx/nginx.conf</code>, though I am aware there are other, more modern ways to configure nginx via <code>/etc/nginx/conf.d/*.conf</code> files and such. Feel free to accomplish your configuration however you prefer. The main points should be portable.</p>
+<p>If you&rsquo;re ready, let&rsquo;s jump straight to the nginx configuration details.</p>
+<h2 id="using-nginx-stream-directive-to-detect-incoming-connection-type">Using Nginx Stream Directive to Detect Incoming Connection type</h2>
+<p>Nginx has a <code>stream</code> directive, which can be used to accept incoming TCP connections, and provide things such as proxying to SSH servers, load balancing HTTPS servers, and many other features related to SSL/TLS features. In our case, we are going to use this in conjunction with the <code>$ssl_preread_protocol</code> variable to determine whether the incoming connection is HTTPS or something else (SSH in our case, is the assumption).</p>
+<p>Nginx recently wrote a <a href="https://www.f5.com/company/blog/nginx/running-non-ssl-protocols-over-ssl-port-nginx-1-15-2">blog post</a> detailing how to mutliplex ssh and SSL/TLS traffic on the same port, much like I&rsquo;m describing here. I found this while trying to solve my origiinal issue of getting around blocked ports on certain public networks, preventing me from accessing my home server&rsquo;s SSH service. The configuration they mention in the blog is like so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>stream <span style="color:#f92672">{</span>    upstream ssh <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        server 192.0.2.1:22;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    upstream web <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        server 192.0.2.2:443;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    map $ssl_preread_protocol $upstream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        default ssh;
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;TLSv1.2&#34;</span> web;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># SSH and SSL on the same port</span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        listen 443;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        proxy_pass $upstream;
+</span></span><span style="display:flex;"><span>        ssl_preread on;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>When I attempted to use their example by adding it to my existing <code>nginx.conf</code>, which contains several other <code>server</code> blocks listening on port 443, I found that nginx would no longer run when I ran the service, because the <code>stream</code> directive was already binding to port 443, and the subsequent <code>server</code> blocks within the main <code>http</code> block were not allowed to re-bind to that port. (Obviously, in my case, I changed the IP from 192.0.2.1 and 192.0.2.2 to my own machine&rsquo;s IP and ports.)</p>
+<p>Normally, you can have multiple <code>server</code> blocks within an <code>http</code> block, where <code>listen</code> identifies the port to listen to, and <code>server_name</code> can be used to direct the HTTPS request for a particular domain to whatever internal IP you choose. Those <code>server</code> blocks can all <code>listen</code> to the same port, like 443, and only the one that matches the other criteria will be executed. However, when you have a <code>stream</code> block at the top of the config, and it is binding to 443, you cannot subsquently have <code>server</code> blocks within your <code>http</code> block bound to 443 as well. So, you either have to handle all your servers within the <code>stream</code> block, or use a clever trick to avoid having to move the rest of your config into the <code>stream</code> block&hellip;</p>
+<h2 id="the-configuration">The Configuration</h2>
+<p>Here is a snippet of what I ended up with in my <code>nginx.conf</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>user http http;
+</span></span><span style="display:flex;"><span>worker_processes  4;
+</span></span><span style="display:flex;"><span>load_module /usr/lib/nginx/modules/ngx_stream_module.so;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>events <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    worker_connections  10000;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    upstream ssh <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        server 127.0.0.1:6789;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    upstream web <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        server 127.0.0.1:444;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    map $ssl_preread_protocol $upstream <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        default ssh;
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;TLSv1.2&#34;</span> web;
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;TLSv1.3&#34;</span> web;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># SSH and SSL on the same port</span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        listen 443;
+</span></span><span style="display:flex;"><span>        proxy_pass $upstream;
+</span></span><span style="display:flex;"><span>        ssl_preread on;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>The lines near the top are simply configuring this particular machine&rsquo;s nginx instance to spawn worker processes with the &ldquo;http&rdquo; user, and allow for up to 4 processes, and 10000 connections. There is no need to add these to your config or replace what you already have. The line <code>load_module /usr/lib/nginx/modules/ngx_stream_module.so;</code> pulls in the module for stream processing, because the version of nginx I am using did not have this precompiled. You can try with or without it, depending on your compiled nginx version.</p>
+<p>Next, you notice the <code>stream</code> block, which contains two different <code>upstream</code> blocks. These are used to name different servers to which traffic can be directed. In my case, both the ssh and the web server(s) are on the same machine runninng nginx, so I used the localhost (127.0.0.1) as the upstream server, with port 6789 (for demonstrative purposes) for the SSH server, and port 444 for the web server. Why 444 you may ask? More on this later.</p>
+<p>The next thing you notice is the <code>map</code> block with the variable <code>$ssl_preread_protocol</code>. Within this are several options, which the <code>map</code> block will attempt to match against what is found in the <code>$ssl_preread_protocol</code>. As described in the nginx blog link, this variable contains a string identifying the SSL/TLS version being used by the incoming connection. In my case, I only match against &ldquo;TLSv1.2&rdquo; and &ldquo;TLSv1.3&rdquo; because I restrict HTTPS connections to those protocols, and nothing older, but you can add &ldquo;TLSv1.0&rdquo; if you so choose, for example. If the TLS version strings are found and match, then the <code>$upstream</code> variable will be set to <code>web</code>. If not, then it will use the default of <code>ssh</code>.</p>
+<p>Later, in the <code>server</code> block, the <code>$upstream</code> variable is used, now mapped either to <code>ssh</code> or <code>web</code>, and <code>proxy_pass</code> will redirect the incoming connection to either the SSH server/port or the web one.</p>
+<p>Now, back to the question of &ldquo;why 444&rdquo;? Well, doing this allowed me to make a simple modification to the rest of the <code>http</code>-&gt;<code>server</code>-&gt;<code>listen</code> directives by simply changing the 443 to a 444, and avoiding having to migrate or rewrite all their server directives within the new <code>stream</code> directive.</p>
+<p>For example, one of my many preexisting <code>http</code>-&gt;<code>server</code> directives looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>http <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        listen <span style="color:#ae81ff">444</span> ssl;
+</span></span><span style="display:flex;"><span>        ssl_certificate /etc/nginx/certs/wildcard/fullchain.pem;
+</span></span><span style="display:flex;"><span>        ssl_certificate_key /etc/nginx/certs/wildcard/privkey.pem;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        server_name testing.thewalr.us;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        location / <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            proxy_pass   http://127.0.0.1:54321/;
+</span></span><span style="display:flex;"><span>            proxy_set_header Host $host;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Previously, the <code>listen 444 ssl;</code> had said <code>listen 443 ssl;</code> and failed to work when the new <code>stream</code> directive was added. Now, with a simple port change to another previously-unused internal port, we can effectively redirect incoming non-SSH SSL/TLS connections to that new port, and let the same nginx instance get a second crack at directing that traffic!</p>
+<p>Effectively what this configuration  does is this:</p>
+<ol>
+<li>Accept incoming connections on the public interface on port 443, monitored by the <code>stream</code> directive</li>
+<li>If SSL/TLS protocol versions are NOT present in the stream, we can proxy the connection to our server:port running SSH on the LAN side of our network.</li>
+<li>If SSL/TLS protocol version ARE present in the stream, we can proxy the connection back to ourselves/nginx but on port 444.</li>
+<li>Finally, because our nginx config&rsquo;s <code>http</code> block and its associated <code>server</code> blocks are listening on port 444 later in the same nginx config, the proxy pass to port 444 will be handled &ldquo;recursively&rdquo; by the same nginx instance.</li>
+</ol>
+<p>This effectively solved my problem of needing to run SSH and HTTPS on the same 443 port to get around port blocks in public networks, where proxying my browser through my SSH server is most needed for security purposes. And, because I only made a simple port change, I only had to search and replace instances of 443 in my existing list of server directives with 444 (or some other suitable port you can choose), minimally impacting the amount of changes needed. In the future, if I decide to no longer bother with this setup, I could simply proxy all requests from the <code>stream</code> directive to port 444, bypassing the <code>map</code> step, without any other changes being necessary further down the config file.</p>
+<p>Please comment below if this helped you, or if you have any suggestions for improvements!</p>
+
         </div>
         <footer class="article-footer">
     <a data-url="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/" data-id=" 1a4f1e0e2b03d2b2bfce01b97ec08295 " class="article-share-link">
@@ -410,478 +515,50 @@
 </footer>
 
     </div>
-</article>
 
-<article class="article article-type-post" itemscope="" itemprop="blogPost">
-    <div class="article-inner">
-        
-        <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" itemprop="url">
-            <img src="https://blog.thewalr.us/banners/esp8266.jpg" class="article-banner">
-        
-        </a>
-
-        <header class="article-header">
-    <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/">
-    <h1 class="article-title" itemprop="name">
-        Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport
-    </h1>
-    </a>
-    <div class="article-meta">
-
-        
-        <div class="article-date">
-            <i class="fa fa-calendar"></i>
-            <time datetime="2019-03-27 18:45:46 -0500 CDT" itemprop="datePublished">2019-03-27</time>
-            &middot;
-            5331
-            words
-            &middot;
-            26
-            minute read
-        </div>
-        
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/categories/how-to">how-to</a>
-                
-                
-            </div>
-            
-        
-
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/how-to">how-to</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/arduino">arduino</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/esp8266">ESP8266</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/mqtt">MQTT</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/certs">certs</a>
-                
-                
-            </div>
-            
-        
-    </div>
-</header>
-
-        <div class="article-entry" itemprop="articleBody">
-            <p>
-                <h1 id="using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport">Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport</h1>
-<p>A while back, I purchased a few <a href="https://www.sparkfun.com/products/13711">SparkFun Thing Dev</a> boards (featuring the venerable ESP8266 WiFi chipset) and <a href="https://www.sparkfun.com/products/13815">SparkFun Beefcake Relays</a> with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the <a href="https://mqtt.org">MQTT</a> protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.</p>
-            </p>
-            <p class="article-more-link">
-                <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/">
-                    Read more
-                </a>
-            </p>
-        </div>
-        <footer class="article-footer">
-    <a data-url="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" data-id=" 9f5d6f51201d450842bf953f35f9f094 " class="article-share-link">
-        <i class="fa fa-share"></i>
-        Share
-    </a>
     
-    <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/#disqus_thread" class="article-comment-link">
-        Comments
+<nav id="article-nav">
+    
+    <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport</div>
     </a>
     
 
-    <script>
-    (function ($) {
-        
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-    </script>
-</footer>
-
-    </div>
-</article>
-
-<article class="article article-type-post" itemscope="" itemprop="blogPost">
-    <div class="article-inner">
-        
-        <a href="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" itemprop="url">
-            <img src="https://blog.thewalr.us/banners/rpizw.jpg" class="article-banner">
-        
-        </a>
-
-        <header class="article-header">
-    <a href="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/">
-    <h1 class="article-title" itemprop="name">
-        Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi
-    </h1>
-    </a>
-    <div class="article-meta">
-
-        
-        <div class="article-date">
-            <i class="fa fa-calendar"></i>
-            <time datetime="2017-09-26 00:47:10 -0500 CDT" itemprop="datePublished">2017-09-26</time>
-            &middot;
-            2225
-            words
-            &middot;
-            11
-            minute read
-        </div>
-        
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/categories/how-to">how-to</a>
-                
-                
-            </div>
-            
-        
-
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/how-to">how-to</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/raspberry-pi">raspberry-pi</a>
-                
-                
-            </div>
-            
-        
-    </div>
-</header>
-
-        <div class="article-entry" itemprop="articleBody">
-            <p>
-                <h1 id="enabling-simultaneous-ap-and-managed-mode-wifi-on-raspberry-pi-zero-w-raspbian-stretch">Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch)</h1>
-<p>I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.</p>
-            </p>
-            <p class="article-more-link">
-                <a href="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/">
-                    Read more
-                </a>
-            </p>
-        </div>
-        <footer class="article-footer">
-    <a data-url="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" data-id=" daaa79a95c4c5eb256cd619be7352482 " class="article-share-link">
-        <i class="fa fa-share"></i>
-        Share
-    </a>
     
-    <a href="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/#disqus_thread" class="article-comment-link">
-        Comments
-    </a>
-    
-
-    <script>
-    (function ($) {
-        
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-    </script>
-</footer>
-
-    </div>
-</article>
-
-<article class="article article-type-post" itemscope="" itemprop="blogPost">
-    <div class="article-inner">
-        
-        </a>
-
-        <header class="article-header">
-    <a href="https://blog.thewalr.us/2016/05/26/hello/">
-    <h1 class="article-title" itemprop="name">
-        Hello
-    </h1>
-    </a>
-    <div class="article-meta">
-
-        
-        <div class="article-date">
-            <i class="fa fa-calendar"></i>
-            <time datetime="2016-05-26 12:04:42 -0500 CDT" itemprop="datePublished">2016-05-26</time>
-            &middot;
-            278
-            words
-            &middot;
-            2
-            minute read
-        </div>
-        
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/categories/blog">blog</a>
-                
-                
-            </div>
-            
-        
-
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://blog.thewalr.us/tags/hello">hello</a>
-                
-                
-            </div>
-            
-        
-    </div>
-</header>
-
-        <div class="article-entry" itemprop="articleBody">
-            <p>
-                <h1 id="whats-with-thewalrus">What&rsquo;s with TheWalrus?</h1>
-<p>This one&rsquo;s easy. I was looking for interesting words that end with &lsquo;us&rsquo; that could be purchased as cheap domain names. I picked up a few and so far have only maintained <a href="https://thewalr.us">TheWalrus</a> and <a href="https://thecact.us">TheCactus</a>. I have no personal attachment to either one yet, but I&rsquo;m sure I can retroactively drum something up if I can dedicate some time to this blog.</p>
-<h1 id="whats-with-this-blog">What&rsquo;s with this blog?</h1>
-<p>Ever since &ndash; ohh&hellip; &ndash; high school, I&rsquo;ve been meaning to keep an online journal of sorts, before the word &lsquo;Blog&rsquo; was a thing.  I&rsquo;ve made several attempts at doing it, but I&rsquo;ve always wanted to either hand-code, self-host, or otherwise have total control of the whole thing. I have a tendency to start things, work on them until they&rsquo;re &ldquo;good enough,&rdquo; and then never really finish them up. Naturally, this has led to a lot of half-hearted starts at creating my own website which inevitably fall to the wayside once work, family, and real life take center stage.  Finally, I gave in and decided to use <a href="https://gohugo.io/">Hugo</a> and <a href="https://pages.github.com/">GitHub Pages</a>.  I&rsquo;m hoping that getting past this intial hurdle will allow me to finally concentrate on the content rather thant he delivery mechanism.</p>
-            </p>
-            <p class="article-more-link">
-                <a href="https://blog.thewalr.us/2016/05/26/hello/">
-                    Read more
-                </a>
-            </p>
-        </div>
-        <footer class="article-footer">
-    <a data-url="https://blog.thewalr.us/2016/05/26/hello/" data-id=" c0984379b06fc6168671e67f4dc3828a " class="article-share-link">
-        <i class="fa fa-share"></i>
-        Share
-    </a>
-    
-    <a href="https://blog.thewalr.us/2016/05/26/hello/#disqus_thread" class="article-comment-link">
-        Comments
-    </a>
-    
-
-    <script>
-    (function ($) {
-        
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-    </script>
-</footer>
-
-    </div>
-</article>
-
-
-<nav id="page-nav">
-
 </nav>
+
+
+</article>
+
+
+<section id="comments">
+    <div id="disqus_thread">
+        <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "thewalrus" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+</section>
+
 
 
         </section>
@@ -900,7 +577,7 @@
                 <div class="item-thumbnail">
                     <a href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/" class="thumbnail">
                     
-                        <span style="background-image:url(https://blog.thewalr.us/banners/nginx.png)" alt="TheWalrus" class="thumbnail-image"></span>
+                        <span style="background-image:url(https://blog.thewalr.us/banners/nginx.png)" alt="Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port" class="thumbnail-image"></span>
                     
                     </a>
                 </div>
@@ -926,7 +603,7 @@
                 <div class="item-thumbnail">
                     <a href="https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/" class="thumbnail">
                     
-                        <span style="background-image:url(https://blog.thewalr.us/banners/esp8266.jpg)" alt="TheWalrus" class="thumbnail-image"></span>
+                        <span style="background-image:url(https://blog.thewalr.us/banners/esp8266.jpg)" alt="Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port" class="thumbnail-image"></span>
                     
                     </a>
                 </div>
@@ -952,7 +629,7 @@
                 <div class="item-thumbnail">
                     <a href="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" class="thumbnail">
                     
-                        <span style="background-image:url(https://blog.thewalr.us/banners/rpizw.jpg)" alt="TheWalrus" class="thumbnail-image"></span>
+                        <span style="background-image:url(https://blog.thewalr.us/banners/rpizw.jpg)" alt="Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On the Same Port" class="thumbnail-image"></span>
                     
                     </a>
                 </div>

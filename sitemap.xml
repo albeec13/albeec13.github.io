@@ -26,7 +26,7 @@
     <loc>https://blog.thewalr.us/</loc>
     <lastmod>2019-04-05T22:35:10-05:00</lastmod>
   </url><url>
-    <loc>https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-one-external-port-and-a-single-nginx-instance/</loc>
+    <loc>https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-the-same-port/</loc>
     <lastmod>2019-04-05T22:35:10-05:00</lastmod>
   </url><url>
     <loc>https://blog.thewalr.us/tags/arduino/</loc>
