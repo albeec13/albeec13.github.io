@@ -4,71 +4,72 @@
     <title>Tags on TheWalrus</title>
     <link>https://blog.thewalr.us/tags/</link>
     <description>Recent content in Tags on TheWalrus</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Mar 2019 18:45:46 -0500</lastBuildDate><atom:link href="https://blog.thewalr.us/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Apr 2019 22:35:10 -0500</lastBuildDate>
+    <atom:link href="https://blog.thewalr.us/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>arduino</title>
+      <title>How-To</title>
+      <link>https://blog.thewalr.us/tags/how-to/</link>
+      <pubDate>Fri, 05 Apr 2019 22:35:10 -0500</pubDate>
+      <guid>https://blog.thewalr.us/tags/how-to/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nginx</title>
+      <link>https://blog.thewalr.us/tags/nginx/</link>
+      <pubDate>Fri, 05 Apr 2019 22:35:10 -0500</pubDate>
+      <guid>https://blog.thewalr.us/tags/nginx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ssh</title>
+      <link>https://blog.thewalr.us/tags/ssh/</link>
+      <pubDate>Fri, 05 Apr 2019 22:35:10 -0500</pubDate>
+      <guid>https://blog.thewalr.us/tags/ssh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Arduino</title>
       <link>https://blog.thewalr.us/tags/arduino/</link>
       <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/tags/arduino/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>certs</title>
+      <title>Certs</title>
       <link>https://blog.thewalr.us/tags/certs/</link>
       <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/tags/certs/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>ESP8266</title>
       <link>https://blog.thewalr.us/tags/esp8266/</link>
       <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/tags/esp8266/</guid>
       <description></description>
     </item>
-    
-    <item>
-      <title>how-to</title>
-      <link>https://blog.thewalr.us/tags/how-to/</link>
-      <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
-      <guid>https://blog.thewalr.us/tags/how-to/</guid>
-      <description></description>
-    </item>
-    
     <item>
       <title>MQTT</title>
       <link>https://blog.thewalr.us/tags/mqtt/</link>
       <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/tags/mqtt/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>raspberry-pi</title>
+      <title>Raspberry-Pi</title>
       <link>https://blog.thewalr.us/tags/raspberry-pi/</link>
       <pubDate>Tue, 26 Sep 2017 00:47:10 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/tags/raspberry-pi/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>hello</title>
+      <title>Hello</title>
       <link>https://blog.thewalr.us/tags/hello/</link>
       <pubDate>Thu, 26 May 2016 12:04:42 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/tags/hello/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

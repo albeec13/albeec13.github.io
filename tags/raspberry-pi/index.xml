@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>raspberry-pi on TheWalrus</title>
+    <title>Raspberry-Pi on TheWalrus</title>
     <link>https://blog.thewalr.us/tags/raspberry-pi/</link>
-    <description>Recent content in raspberry-pi on TheWalrus</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Raspberry-Pi on TheWalrus</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Sep 2017 00:47:10 -0500</lastBuildDate><atom:link href="https://blog.thewalr.us/tags/raspberry-pi/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Sep 2017 00:47:10 -0500</lastBuildDate>
+    <atom:link href="https://blog.thewalr.us/tags/raspberry-pi/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi</title>
       <link>https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</link>
       <pubDate>Tue, 26 Sep 2017 00:47:10 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</guid>
-      <description>Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &amp;ldquo;managed&amp;rdquo; device (also known as &amp;ldquo;client&amp;rdquo; mode) and as an access point, preferrably at the same time.</description>
+      <description>&lt;h1 id=&#34;enabling-simultaneous-ap-and-managed-mode-wifi-on-raspberry-pi-zero-w-raspbian-stretch&#34;&gt;Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch)&lt;/h1&gt;&#xA;&lt;p&gt;I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &amp;ldquo;managed&amp;rdquo; device (also known as &amp;ldquo;client&amp;rdquo; mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

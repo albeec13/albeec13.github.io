@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>how-to on TheWalrus</title>
+    <title>How-To on TheWalrus</title>
     <link>https://blog.thewalr.us/categories/how-to/</link>
-    <description>Recent content in how-to on TheWalrus</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in How-To on TheWalrus</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Mar 2019 18:45:46 -0500</lastBuildDate><atom:link href="https://blog.thewalr.us/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Apr 2019 22:35:10 -0500</lastBuildDate>
+    <atom:link href="https://blog.thewalr.us/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On One External Port and a Single Nginx Instance</title>
+      <link>https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-one-external-port-and-a-single-nginx-instance/</link>
+      <pubDate>Fri, 05 Apr 2019 22:35:10 -0500</pubDate>
+      <guid>https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-one-external-port-and-a-single-nginx-instance/</guid>
+      <description>&lt;h1 id=&#34;the-problem&#34;&gt;The Problem&lt;/h1&gt;&#xA;&lt;p&gt;If you&amp;rsquo;ve ever tinkered with web services / website building and like to tinker with self-hosting, you&amp;rsquo;re probably already familiar with one of the major webservers like Apache or nginx. You may also be into hosting other non-HTTP(s) services such as SSH, whether just for remote management of a linux box or, as I like to do, tunneling your traffic through a home linux server when traveling and using open or un-secured WiFi networks, just to be safe. Normally, this is fine, and you can run your HTTPS traffic on the standard port 443, and SSH on 22 (or ideally some random higher-numbered port to avoid online sniffers/scanners). Sometimes, such as when using public WiFi networks or hotel networks, you can run into a situation where outbound ports on that network are blocked, making it difficult or impossible to reach your SSH server. Generally, ports like 80 and 443 are always open for outbound traffic to avoid breaking basically all normal HTTP/HTTPS traffic, and we can utilize this fact to get around the blocked port problem.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport</title>
       <link>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</link>
       <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</guid>
-      <description>Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.</description>
+      <description>&lt;h1 id=&#34;using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport&#34;&gt;Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport&lt;/h1&gt;&#xA;&lt;p&gt;A while back, I purchased a few &lt;a href=&#34;https://www.sparkfun.com/products/13711&#34;&gt;SparkFun Thing Dev&lt;/a&gt; boards (featuring the venerable ESP8266 WiFi chipset) and &lt;a href=&#34;https://www.sparkfun.com/products/13815&#34;&gt;SparkFun Beefcake Relays&lt;/a&gt; with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the &lt;a href=&#34;https://mqtt.org&#34;&gt;MQTT&lt;/a&gt; protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi</title>
       <link>https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</link>
       <pubDate>Tue, 26 Sep 2017 00:47:10 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/</guid>
-      <description>Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &amp;ldquo;managed&amp;rdquo; device (also known as &amp;ldquo;client&amp;rdquo; mode) and as an access point, preferrably at the same time.</description>
+      <description>&lt;h1 id=&#34;enabling-simultaneous-ap-and-managed-mode-wifi-on-raspberry-pi-zero-w-raspbian-stretch&#34;&gt;Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch)&lt;/h1&gt;&#xA;&lt;p&gt;I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &amp;ldquo;managed&amp;rdquo; device (also known as &amp;ldquo;client&amp;rdquo; mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

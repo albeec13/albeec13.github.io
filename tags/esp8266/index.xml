@@ -4,17 +4,16 @@
     <title>ESP8266 on TheWalrus</title>
     <link>https://blog.thewalr.us/tags/esp8266/</link>
     <description>Recent content in ESP8266 on TheWalrus</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Mar 2019 18:45:46 -0500</lastBuildDate><atom:link href="https://blog.thewalr.us/tags/esp8266/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Mar 2019 18:45:46 -0500</lastBuildDate>
+    <atom:link href="https://blog.thewalr.us/tags/esp8266/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Using Esp8266 As An IoT Endpoint With Encrypted MQTT Transport</title>
       <link>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</link>
       <pubDate>Wed, 27 Mar 2019 18:45:46 -0500</pubDate>
-      
       <guid>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</guid>
-      <description>Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport A while back, I purchased a few SparkFun Thing Dev boards (featuring the venerable ESP8266 WiFi chipset) and SparkFun Beefcake Relays with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the MQTT protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.</description>
+      <description>&lt;h1 id=&#34;using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport&#34;&gt;Using ESP8266 as an IoT Endpoint with Encrypted MQTT Transport&lt;/h1&gt;&#xA;&lt;p&gt;A while back, I purchased a few &lt;a href=&#34;https://www.sparkfun.com/products/13711&#34;&gt;SparkFun Thing Dev&lt;/a&gt; boards (featuring the venerable ESP8266 WiFi chipset) and &lt;a href=&#34;https://www.sparkfun.com/products/13815&#34;&gt;SparkFun Beefcake Relays&lt;/a&gt; with a plan to use them in a cloud-free IoT setup. After some investigation, I settled on using the &lt;a href=&#34;https://mqtt.org&#34;&gt;MQTT&lt;/a&gt; protocol as a lightweight way to send and receive messages between my Linux server and any number of IoT endpoints throughout my house.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

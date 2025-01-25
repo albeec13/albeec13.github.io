@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
     <title>Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi &middot; TheWalrus</title>
-    <meta name="generator" content="Hugo 0.105.0">
+    <meta name="generator" content="Hugo 0.142.0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Albert Chaharbakhshi">
@@ -23,22 +23,29 @@
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-    <meta property="og:title" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi" />
-<meta property="og:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2017-09-26T00:47:10-05:00" />
-<meta property="article:modified_time" content="2017-09-26T00:47:10-05:00" />
+    <meta property="og:url" content="https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-managed-mode-wifi/">
+  <meta property="og:site_name" content="TheWalrus">
+  <meta property="og:title" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi">
+  <meta property="og:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a “managed” device (also known as “client” mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2017-09-26T00:47:10-05:00">
+    <meta property="article:modified_time" content="2017-09-26T00:47:10-05:00">
+    <meta property="article:tag" content="How-To">
+    <meta property="article:tag" content="Raspberry-Pi">
 
-
-    <meta itemprop="name" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi">
-<meta itemprop="description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time."><meta itemprop="datePublished" content="2017-09-26T00:47:10-05:00" />
-<meta itemprop="dateModified" content="2017-09-26T00:47:10-05:00" />
-<meta itemprop="wordCount" content="2225">
-<meta itemprop="keywords" content="how-to,raspberry-pi," />
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi"/>
-<meta name="twitter:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a &ldquo;managed&rdquo; device (also known as &ldquo;client&rdquo; mode) and as an access point, preferrably at the same time."/>
+    
+  <meta itemprop="name" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi">
+  <meta itemprop="description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a “managed” device (also known as “client” mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.">
+  <meta itemprop="datePublished" content="2017-09-26T00:47:10-05:00">
+  <meta itemprop="dateModified" content="2017-09-26T00:47:10-05:00">
+  <meta itemprop="wordCount" content="2225">
+  <meta itemprop="keywords" content="How-To,Raspberry-Pi">
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi">
+  <meta name="twitter:description" content="Enabling Simultaneous AP and Managed Mode WiFi on Raspberry Pi Zero W (Raspbian Stretch) I recently purchased a pair of Raspberry Pi Zero W boards, and plan to use them for some home automation / IoT-type work. One of my requirements is that the WiFi on this board be able to run as both a “managed” device (also known as “client” mode) and as an access point, preferrably at the same time. After looking around a bit online, I found several people who claimed to have gotten this working, as well as posts saying it should work, based on the chipset. Despite my best efforts, I was unable to get any of those tutorials to work reliably on their own. By combining some information garnered from each one, along with some trial and error, I was finally able to get AP/Manged mode working, as described below.">
 
     
 
@@ -48,17 +55,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FNPHV8HR95"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-FNPHV8HR95', { 'anonymize_ip': false });
-}
-</script>
-
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-FNPHV8HR95"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-FNPHV8HR95');
+        }
+      </script>
 <body>
 <div class="container">
 
@@ -172,12 +182,12 @@ if (!doNotTrack) {
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        3
+        4
         <span>Posts</span>
       </div>
       <div class="article-info-block">
         
-          7
+          9
         
         <span>
             Tags
@@ -188,13 +198,6 @@ if (!doNotTrack) {
       <table>
         <tr>
           
-<td><a href="//github.com/albeec13" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
-
-
-
-
-
-<td><a href="//bitbucket.com/albeec13" target="_blank" title="Bitbucket"><i class="fa fa-bitbucket"></i></a></td>
 
 
 
@@ -212,11 +215,6 @@ if (!doNotTrack) {
 
 
 
-<td><a href="//instagram.com/albeec13" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></td>
-
-
-
-<td><a href="//youtube.com/albeec13" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></td>
 
 
 
@@ -232,13 +230,6 @@ if (!doNotTrack) {
 
 
 
-<td><a href="//linkedin.com/in/albeec13" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></td>
-
-
-
-
-
-<td><a href="//stackoverflow.com/users/albeec13" target="_blank" title="Stack Overflow"><i class="fa fa-stack-overflow"></i></a></td>
 
 
 
@@ -248,12 +239,17 @@ if (!doNotTrack) {
 
 
 
-<td><a href="//facebook.com/albeec13" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></td>
 
 
 
 
-          <td><a href="https://blog.thewalr.us/index.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
+
+
+
+
+
+
+          <td><a href="/index.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
         </tr>
       </table>
     </div>
@@ -625,7 +621,7 @@ I then added a <code>cron</code> job like so:</p>
 <section id="comments">
     <div id="disqus_thread">
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -660,6 +656,32 @@ I then added a <code>cron</code> job like so:</p>
     </h3>
     <div class="widget">
         <ul id="recent-post">
+            
+            <li>
+                <div class="item-thumbnail">
+                    <a href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-one-external-port-and-a-single-nginx-instance/" class="thumbnail">
+                    
+                        <span style="background-image:url(https://blog.thewalr.us/banners/nginx.png)" alt="Raspberry Pi Zero W Simultaneous AP and Managed Mode Wifi" class="thumbnail-image"></span>
+                    
+                    </a>
+                </div>
+                <div class="item-inner">
+                    
+                    
+                    <p class="item-category">
+                        
+                        <a class="article-category-link" href="https://blog.thewalr.us/categories/how-to">
+                        how-to
+                        </a>
+                    </p>
+                    
+                    
+                    <p class="item-title"><a href="https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-one-external-port-and-a-single-nginx-instance/" class="title">Using Nginx Stream Directive to Host SSH and Multiple HTTPS Servers On One External Port and a Single Nginx Instance</a></p>
+                    <p class="item-date">
+                        <time datetime="2019-04-05 22:35:10 -0500 CDT" itemprop="datePublished">2019-04-05</time>
+                    </p>
+                </div>
+            </li>
             
             <li>
                 <div class="item-thumbnail">
@@ -765,7 +787,7 @@ I then added a <code>cron</code> job like so:</p>
                 <a class="category-list-link" href="https://blog.thewalr.us/categories/how-to">
                     how-to
                 </a>
-                <span class="category-list-count">2</span>
+                <span class="category-list-count">3</span>
             </li>
             
         </ul>
@@ -822,7 +844,7 @@ I then added a <code>cron</code> job like so:</p>
                 <a class="category-list-link" href="https://blog.thewalr.us/tags/how-to">
                     how-to
                 </a>
-                <span class="category-list-count">2</span>
+                <span class="category-list-count">3</span>
             </li>
             
             <li class="category-list-item">
@@ -835,8 +857,24 @@ I then added a <code>cron</code> job like so:</p>
             
             <li class="category-list-item">
                 
+                <a class="category-list-link" href="https://blog.thewalr.us/tags/nginx">
+                    nginx
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
                 <a class="category-list-link" href="https://blog.thewalr.us/tags/raspberry-pi">
                     raspberry-pi
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://blog.thewalr.us/tags/ssh">
+                    ssh
                 </a>
                 <span class="category-list-count">1</span>
             </li>
@@ -876,7 +914,13 @@ I then added a <code>cron</code> job like so:</p>
         <a href="https://blog.thewalr.us/tags/mqtt" style="font-size: 12px;">mqtt</a>
         
         
+        <a href="https://blog.thewalr.us/tags/nginx" style="font-size: 12px;">nginx</a>
+        
+        
         <a href="https://blog.thewalr.us/tags/raspberry-pi" style="font-size: 12px;">raspberry-pi</a>
+        
+        
+        <a href="https://blog.thewalr.us/tags/ssh" style="font-size: 12px;">ssh</a>
         
     </div>
 </div>
@@ -895,7 +939,7 @@ I then added a <code>cron</code> job like so:</p>
 <footer id="footer">
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2022
+      &copy; 2025
       Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
     </div>
   </div>

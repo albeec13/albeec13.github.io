@@ -2,10 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.thewalr.us/tags/arduino/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url><url>
     <loc>https://blog.thewalr.us/categories/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/how-to/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/categories/how-to/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/nginx/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/post/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/ssh/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/2019/04/05/using-nginx-stream-directive-to-host-ssh-and-multiple-https-servers-on-one-external-port-and-a-single-nginx-instance/</loc>
+    <lastmod>2019-04-05T22:35:10-05:00</lastmod>
+  </url><url>
+    <loc>https://blog.thewalr.us/tags/arduino/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
   </url><url>
     <loc>https://blog.thewalr.us/tags/certs/</loc>
@@ -14,22 +38,7 @@
     <loc>https://blog.thewalr.us/tags/esp8266/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
   </url><url>
-    <loc>https://blog.thewalr.us/tags/how-to/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url><url>
-    <loc>https://blog.thewalr.us/categories/how-to/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url><url>
     <loc>https://blog.thewalr.us/tags/mqtt/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url><url>
-    <loc>https://blog.thewalr.us/post/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url><url>
-    <loc>https://blog.thewalr.us/tags/</loc>
-    <lastmod>2019-03-27T18:45:46-05:00</lastmod>
-  </url><url>
-    <loc>https://blog.thewalr.us/</loc>
     <lastmod>2019-03-27T18:45:46-05:00</lastmod>
   </url><url>
     <loc>https://blog.thewalr.us/2019/03/27/using-esp8266-as-an-iot-endpoint-with-encrypted-mqtt-transport/</loc>
